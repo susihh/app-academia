@@ -410,7 +410,7 @@
       color: var(--primary-orange);
     }
 
-    /* Frequência */
+    /* Estilos do Bloco de Frequência da Semana */
     .freq-box {
       text-align: center;
       padding: 10px 0;
@@ -430,21 +430,83 @@
       background-color: #1a1a1a;
       border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       border: 1px solid #333;
     }
 
     .progress-bar {
       height: 100%;
-      width: 85%;
+      width: 0%;
       background: linear-gradient(90deg, #ff8800, var(--primary-orange));
       border-radius: 10px;
-      transition: width 1s ease-in-out;
+      transition: width 0.4s ease;
+    }
+
+    /* Grid de Dias da Semana */
+    .week-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .day-btn {
+      background-color: #000;
+      border: 1px solid #333;
+      color: var(--text-gray);
+      padding: 10px 4px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .day-btn .day-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .day-btn .check-icon {
+      font-size: 0.9rem;
+      opacity: 0.3;
+    }
+
+    .day-btn.active {
+      border-color: var(--primary-orange);
+      background-color: rgba(255, 102, 0, 0.15);
+      color: #fff;
+      box-shadow: 0 0 10px rgba(255, 102, 0, 0.2);
+    }
+
+    .day-btn.active .check-icon {
+      color: var(--primary-orange);
+      opacity: 1;
+    }
+
+    .reset-week-btn {
+      background: none;
+      border: 1px solid #333;
+      color: var(--text-gray);
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .reset-week-btn:hover {
+      border-color: var(--primary-orange);
+      color: var(--primary-orange);
     }
 
     .freq-info {
       color: var(--text-gray);
       font-size: 0.9rem;
+      margin-bottom: 15px;
     }
 
     /* Exercício Select */
@@ -640,14 +702,50 @@
 
     <div id="tab-dashboard" class="tab-page active">
       <div class="dashboard-grid">
+        
         <div class="dash-card">
-          <h3><span>📊</span> Porcentagem de Frequência</h3>
+          <h3><span>📊</span> Frequência Semanal</h3>
           <div class="freq-box">
-            <div class="freq-number" id="freqDisplay">85%</div>
+            <div class="freq-number" id="freqDisplay">0%</div>
+            
             <div class="progress-bar-container">
               <div class="progress-bar" id="freqBar"></div>
             </div>
-            <p class="freq-info">Você compareceu a <strong>17 dos 20 treinos</strong> este mês. Mantenha o foco!</p>
+
+            <p class="freq-info" id="freqInfoText">Marque os dias em que compareceu à academia nesta semana:</p>
+
+            <div class="week-days-grid">
+              <button class="day-btn" onclick="toggleDay(0, this)">
+                <span class="day-name">SEG</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(1, this)">
+                <span class="day-name">TER</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(2, this)">
+                <span class="day-name">QUA</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(3, this)">
+                <span class="day-name">QUI</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(4, this)">
+                <span class="day-name">SEX</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(5, this)">
+                <span class="day-name">SÁB</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(6, this)">
+                <span class="day-name">DOM</span>
+                <span class="check-icon">✓</span>
+              </button>
+            </div>
+
+            <button class="reset-week-btn" onclick="resetWeekManually()">Resetar Semana</button>
           </div>
         </div>
 
@@ -730,6 +828,9 @@
   </div>
 
   <script>
+    // Estado dos dias da semana (0: Seg ... 6: Dom)
+    let weekState = [false, false, false, false, false, false, false];
+
     function openModal() {
       document.getElementById('modalOverlay').classList.add('active');
       document.getElementById('nome').focus();
@@ -758,12 +859,66 @@
         document.getElementById('workoutSelect').value = selectedGoal;
         
         updateWorkoutAndNutrition(selectedGoal);
+        checkWeeklyReset(); // Verifica se precisa resetar a semana ao entrar
         closeModal();
         
         document.getElementById('landing-page').style.display = 'none';
         document.getElementById('main-screen').style.display = 'block';
         window.scrollTo(0, 0);
       }
+    }
+
+    // Marca/Desmarca o dia e recalcula a frequência
+    function toggleDay(index, btnElement) {
+      weekState[index] = !weekState[index];
+      
+      if (weekState[index]) {
+        btnElement.classList.add('active');
+      } else {
+        btnElement.classList.remove('active');
+      }
+
+      calculateFrequency();
+    }
+
+    // Calcula a porcentagem com base nos dias marcados
+    function calculateFrequency() {
+      const activeDaysCount = weekState.filter(day => day === true).length;
+      const percentage = Math.round((activeDaysCount / 7) * 100);
+
+      document.getElementById('freqDisplay').innerText = `${percentage}%`;
+      document.getElementById('freqBar').style.width = `${percentage}%`;
+
+      document.getElementById('freqInfoText').innerHTML = activeDaysCount > 0 
+        ? `Você treinou <strong>${activeDaysCount} de 7 dias</strong> nesta semana.`
+        : `Marque os dias em que compareceu à academia nesta semana:`;
+    }
+
+    // Reinicia manualmente os dias da semana
+    function resetWeekManually() {
+      weekState = [false, false, false, false, false, false, false];
+      const buttons = document.querySelectorAll('.day-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      calculateFrequency();
+    }
+
+    // Reinicia automaticamente caso seja uma nova semana (segunda-feira)
+    function checkWeeklyReset() {
+      const now = new Date();
+      const currentWeekNumber = getWeekNumber(now);
+      const lastWeekSaved = localStorage.getItem('powerfit_last_week');
+
+      if (lastWeekSaved && parseInt(lastWeekSaved) !== currentWeekNumber) {
+        resetWeekManually();
+      }
+      localStorage.setItem('powerfit_last_week', currentWeekNumber);
+    }
+
+    function getWeekNumber(d) {
+      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
     }
 
     const dataPlans = {
