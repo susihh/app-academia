@@ -24,16 +24,16 @@
     }
 
     :root {
-      /* Tom padrão exatamente igual ao do logotipo POWERFIT */
+      /* Tom de laranja exatamente igual ao da palavra FIT (#ff6600) */
       --primary-orange: #ff6600;
-      --hover-orange: #e65c00;
+      --hover-orange: #ff6600;
       --bg-dark: #050505;
       --card-bg: #0f0f0f;
       --text-gray: #a0a0a0;
       --error-red: #ff4d4d;
     }
 
-    /* Animação de Fundo Flutuante (Intensificada no mesmo tom) */
+    /* Animação de Fundo Flutuante (Usando a tonalidade exata #ff6600) */
     @keyframes pulseGlow {
       0% { 
         background-position: 0% 50%;
@@ -147,7 +147,7 @@
 
     .step-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 10px 25px rgba(255, 102, 0, 0.3);
+      box-shadow: 0 10px 25px rgba(255, 102, 0, 0.35);
     }
 
     .step-number {
@@ -228,12 +228,12 @@
       border-radius: 8px;
       cursor: pointer;
       width: 100%;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: opacity 0.3s ease, transform 0.2s ease;
       animation: pulseBtn 2s infinite;
     }
 
     .btn-orange:hover {
-      background-color: var(--hover-orange);
+      opacity: 0.9;
       transform: scale(1.02);
     }
 
