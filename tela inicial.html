@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Academia PulseFit</title>
   <style>
-    /* Reset e Variáveis */
+    /* Reset e Variáveis de Cores */
     * {
       margin: 0;
       padding: 0;
@@ -14,14 +14,14 @@
     }
 
     :root {
-      --bg-dark: #0f0f10;
-      --bg-card: #18181c;
-      --orange: #ff6b00;
-      --orange-hover: #e05e00;
-      --navy: #001f3f;
-      --navy-light: #002855;
-      --text-light: #f4f4f9;
-      --text-gray: #a0a0aa;
+      --bg-dark: #0a0a0a;        /* Preto Puro */
+      --bg-card: #141414;        /* Grafite Bem Escuro */
+      --bg-card-hover: #1f1f1f;  /* Escuro levemente destacado */
+      --orange: #ff5500;         /* Laranja Vibrante */
+      --orange-hover: #ff7700;   /* Laranja Claro para Hover */
+      --black-border: #262626;   /* Bordas Escuras */
+      --text-light: #ffffff;     /* Branco para legibilidade */
+      --text-gray: #a1a1aa;      /* Cinza Claro */
     }
 
     body {
@@ -36,8 +36,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 8%;
-      background: rgba(15, 15, 16, 0.9);
-      border-bottom: 2px solid var(--navy-light);
+      background: rgba(10, 10, 10, 0.95);
+      border-bottom: 2px solid var(--orange);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -56,18 +56,19 @@
 
     .btn-cadastrar-nav {
       background-color: var(--orange);
-      color: var(--text-light);
+      color: #000;
       padding: 10px 24px;
       border: none;
       border-radius: 25px;
       font-weight: bold;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+      box-shadow: 0 0 15px rgba(255, 85, 0, 0.4);
     }
 
     .btn-cadastrar-nav:hover {
       background-color: var(--orange-hover);
+      box-shadow: 0 0 25px rgba(255, 85, 0, 0.7);
       transform: translateY(-2px);
     }
 
@@ -79,7 +80,8 @@
       justify-content: center;
       text-align: center;
       padding: 100px 20px;
-      background: linear-gradient(180deg, var(--navy) 0%, var(--bg-dark) 100%);
+      background: linear-gradient(180deg, #141414 0%, var(--bg-dark) 100%);
+      border-bottom: 1px solid var(--black-border);
     }
 
     .hero h1 {
@@ -89,6 +91,7 @@
 
     .hero h1 span {
       color: var(--orange);
+      text-shadow: 0 0 10px rgba(255, 85, 0, 0.3);
     }
 
     .hero p {
@@ -114,12 +117,13 @@
     .como-funciona h2::after {
       content: '';
       position: absolute;
-      width: 50%;
+      width: 60%;
       height: 4px;
       background: var(--orange);
       bottom: -10px;
-      left: 25%;
+      left: 20%;
       border-radius: 2px;
+      box-shadow: 0 0 10px var(--orange);
     }
 
     .grid-passos {
@@ -133,13 +137,15 @@
       background-color: var(--bg-card);
       padding: 30px;
       border-radius: 12px;
-      border: 1px solid var(--navy-light);
-      transition: transform 0.3s ease, border-color 0.3s ease;
+      border: 1px solid var(--black-border);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card-passo:hover {
       transform: translateY(-8px);
       border-color: var(--orange);
+      background-color: var(--bg-card-hover);
+      box-shadow: 0 5px 20px rgba(255, 85, 0, 0.2);
     }
 
     .card-passo .numero {
@@ -152,12 +158,12 @@
     /* Bloco de Chamada para Cadastro */
     .call-to-action {
       margin: 60px 8%;
-      background: linear-gradient(135deg, var(--navy-light) 0%, var(--bg-card) 100%);
+      background: radial-gradient(circle at center, #1f1f1f 0%, var(--bg-card) 100%);
       padding: 50px 30px;
       border-radius: 16px;
       text-align: center;
       border: 2px solid var(--orange);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 25px rgba(255, 85, 0, 0.25);
     }
 
     .call-to-action h2 {
@@ -171,19 +177,21 @@
 
     .btn-abrir-modal {
       background-color: var(--orange);
-      color: var(--text-light);
+      color: #000;
       padding: 15px 40px;
       font-size: 1.1rem;
       border: none;
       border-radius: 30px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 85, 0, 0.4);
     }
 
     .btn-abrir-modal:hover {
       background-color: var(--orange-hover);
       transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 85, 0, 0.8);
     }
 
     /* Modal (Telinha Flutuante) */
@@ -193,7 +201,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -215,8 +223,8 @@
       width: 90%;
       max-width: 450px;
       position: relative;
-      border: 1px solid var(--navy-light);
-      box-shadow: 0 0 20px rgba(255, 107, 0, 0.2);
+      border: 1px solid var(--orange);
+      box-shadow: 0 0 30px rgba(255, 85, 0, 0.3);
       transform: translateY(-20px);
       transition: transform 0.3s ease;
     }
@@ -262,32 +270,34 @@
       width: 100%;
       padding: 12px;
       border-radius: 8px;
-      border: 1px solid var(--navy-light);
+      border: 1px solid var(--black-border);
       background-color: var(--bg-dark);
       color: var(--text-light);
       outline: none;
-      transition: border-color 0.3s;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     .form-group input:focus {
       border-color: var(--orange);
+      box-shadow: 0 0 8px rgba(255, 85, 0, 0.4);
     }
 
     .btn-submit {
       width: 100%;
       padding: 14px;
       background-color: var(--orange);
-      color: var(--text-light);
+      color: #000;
       border: none;
       border-radius: 8px;
       font-weight: bold;
       font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
     }
 
     .btn-submit:hover {
       background-color: var(--orange-hover);
+      box-shadow: 0 0 15px rgba(255, 85, 0, 0.5);
     }
   </style>
 </head>
