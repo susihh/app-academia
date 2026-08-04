@@ -1,1013 +1,369 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>IronFit - App de Academia</title>
-    <style>
-        :root {
-            --bg-primary: #0d0d0d;
-            --bg-secondary: #1a1a1a;
-            --bg-card: #1e1e1e;
-            --accent: #ff6b2b;
-            --accent-hover: #ff8255;
-            --accent-glow: rgba(255, 107, 43, 0.35);
-            --text-primary: #f5f5f5;
-            --text-secondary: #b0b0b0;
-            --text-muted: #777777;
-            --border-subtle: #2a2a2a;
-            --white: #ffffff;
-            --danger: #e74c3c;
-            --success: #2ecc71;
-            --radius-sm: 10px;
-            --radius-md: 16px;
-            --radius-lg: 22px;
-            --radius-xl: 28px;
-            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5);
-            --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.7);
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --font-stack: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia PulseFit</title>
+  <style>
+    /* Reset e Variáveis */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    :root {
+      --bg-dark: #0f0f10;
+      --bg-card: #18181c;
+      --orange: #ff6b00;
+      --orange-hover: #e05e00;
+      --navy: #001f3f;
+      --navy-light: #002855;
+      --text-light: #f4f4f9;
+      --text-gray: #a0a0aa;
+    }
 
-        html {
-            font-size: 16px;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
 
-        body {
-            font-family: var(--font-stack);
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            min-height: 100dvh;
-            /* dynamic viewport height */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            line-height: 1.5;
-            position: relative;
-        }
+    /* Cabeçalho */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background: rgba(15, 15, 16, 0.9);
+      border-bottom: 2px solid var(--navy-light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
 
-        /* ========== CONTAINER PRINCIPAL (SIMULA TELA DO APP) ========== */
-        .app-container {
-            width: 100%;
-            max-width: 480px;
-            /* largura máxima como app mobile */
-            min-height: 100vh;
-            min-height: 100dvh;
-            background: linear-gradient(180deg, #0f0f0f 0%, #141414 40%, #0d0d0d 100%);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-shadow: 0 0 80px rgba(0, 0, 0, 0.6);
-            overflow-y: auto;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-light);
+    }
 
-        /* Em telas muito largas, centraliza como um app */
-        @media (min-width: 769px) {
-            .app-container {
-                border-radius: var(--radius-xl);
-                margin: 20px auto;
-                min-height: calc(100vh - 40px);
-                min-height: calc(100dvh - 40px);
-                max-height: calc(100vh - 40px);
-                max-height: calc(100dvh - 40px);
-                border: 1px solid var(--border-subtle);
-            }
+    .logo span {
+      color: var(--orange);
+    }
 
-            body {
-                background-color: #080808;
-                background-image: radial-gradient(ellipse at center, #1a1a1a 0%, #050505 70%);
-            }
-        }
+    .btn-cadastrar-nav {
+      background-color: var(--orange);
+      color: var(--text-light);
+      padding: 10px 24px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    }
 
-        @media (max-width: 768px) {
-            .app-container {
-                max-width: 100%;
-                border-radius: 0;
-                margin: 0;
-                min-height: 100vh;
-                min-height: 100dvh;
-                box-shadow: none;
-            }
-        }
+    .btn-cadastrar-nav:hover {
+      background-color: var(--orange-hover);
+      transform: translateY(-2px);
+    }
 
-        /* ========== SCROLLBAR CUSTOMIZADA ========== */
-        .app-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .app-container::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .app-container::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 10px;
-        }
+    /* Banner Principal */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px;
+      background: linear-gradient(180deg, var(--navy) 0%, var(--bg-dark) 100%);
+    }
 
-        /* ========== HEADER ========== */
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            padding-top: max(16px, env(safe-area-inset-top));
-            flex-shrink: 0;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: rgba(13, 13, 13, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid transparent;
-            transition: border-color var(--transition);
-        }
-        .header.scrolled {
-            border-bottom-color: var(--border-subtle);
-        }
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: #0d0d0d;
-            flex-shrink: 0;
-            box-shadow: 0 4px 16px var(--accent-glow);
-            letter-spacing: -1px;
-        }
-        .logo-text {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--white);
-            letter-spacing: -0.5px;
-        }
-        .logo-text span {
-            color: var(--accent);
-        }
-        .header-actions {
-            display: flex;
-            gap: 8px;
-        }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
 
-        /* ========== BOTÕES ========== */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            border: none;
-            cursor: pointer;
-            font-family: var(--font-stack);
-            font-weight: 600;
-            font-size: 0.95rem;
-            border-radius: 50px;
-            padding: 11px 22px;
-            transition: all var(--transition);
-            text-decoration: none;
-            white-space: nowrap;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            outline: none;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn:active {
-            transform: scale(0.96);
-        }
+    .hero h1 span {
+      color: var(--orange);
+    }
 
-        .btn-outline {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1.5px solid var(--border-subtle);
-        }
-        .btn-outline:hover,
-        .btn-outline:focus-visible {
-            border-color: var(--accent);
-            color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
+    .hero p {
+      max-width: 600px;
+      color: var(--text-gray);
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
 
-        .btn-primary {
-            background: var(--accent);
-            color: #0d0d0d;
-            font-weight: 700;
-            box-shadow: 0 6px 24px var(--accent-glow);
-            border: none;
-        }
-        .btn-primary:hover,
-        .btn-primary:focus-visible {
-            background: var(--accent-hover);
-            box-shadow: 0 8px 32px rgba(255, 107, 43, 0.5);
-            transform: translateY(-1px);
-        }
-        .btn-primary:active {
-            transform: scale(0.95) translateY(0);
-        }
+    /* Seção Como Funciona */
+    .como-funciona {
+      padding: 80px 8%;
+      text-align: center;
+    }
 
-        .btn-lg {
-            padding: 14px 28px;
-            font-size: 1.05rem;
-            border-radius: 50px;
-        }
-        .btn-full {
-            width: 100%;
-            justify-content: center;
-        }
+    .como-funciona h2 {
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+    }
 
-        /* ========== CONTEÚDO PRINCIPAL ========== */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 8px 20px 24px;
-            gap: 28px;
-        }
+    .como-funciona h2::after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--orange);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
 
-        /* ========== SEÇÃO HERO ========== */
-        .hero-section {
-            text-align: center;
-            padding: 16px 0 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        .hero-emoji {
-            font-size: 4rem;
-            animation: float 3s ease-in-out infinite;
-            filter: drop-shadow(0 10px 30px rgba(255, 107, 43, 0.4));
-            line-height: 1;
-        }
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-14px);
-            }
-        }
-        .hero-title {
-            font-size: 1.9rem;
-            font-weight: 900;
-            letter-spacing: -1px;
-            line-height: 1.15;
-            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            max-width: 320px;
-        }
+    .grid-passos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+    }
 
-        /* ========== CARDS DE INFORMAÇÕES ========== */
-        .info-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        .info-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-md);
-            padding: 18px 16px;
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            border: 1px solid var(--border-subtle);
-            transition: all var(--transition);
-            box-shadow: var(--shadow-card);
-        }
-        .info-card:hover {
-            border-color: #3a3a3a;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-        }
-        .info-card-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: var(--radius-sm);
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-        }
-        .icon-orange {
-            background: rgba(255, 107, 43, 0.15);
-        }
-        .icon-green {
-            background: rgba(46, 204, 113, 0.15);
-        }
-        .icon-blue {
-            background: rgba(52, 152, 219, 0.15);
-        }
-        .info-card-text h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 3px;
-            color: var(--white);
-        }
-        .info-card-text p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
+    .card-passo {
+      background-color: var(--bg-card);
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid var(--navy-light);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
 
-        /* ========== ESTATÍSTICAS RÁPIDAS ========== */
-        .stats-row {
-            display: flex;
-            gap: 12px;
-        }
-        .stat-item {
-            flex: 1;
-            background: var(--bg-card);
-            border-radius: var(--radius-md);
-            padding: 16px 12px;
-            text-align: center;
-            border: 1px solid var(--border-subtle);
-            box-shadow: var(--shadow-card);
-        }
-        .stat-number {
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--accent);
-            line-height: 1;
-        }
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+    .card-passo:hover {
+      transform: translateY(-8px);
+      border-color: var(--orange);
+    }
 
-        /* ========== ÁREA DO BOTÃO LOGIN ========== */
-        .login-area {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            padding: 8px 0;
-        }
-        .login-hint {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-align: center;
-        }
-        .login-hint a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .login-hint a:hover {
-            text-decoration: underline;
-        }
+    .card-passo .numero {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--orange);
+      margin-bottom: 15px;
+    }
 
-        /* ========== MODAL / BLOCO FLUTUANTE ========== */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.35s ease, visibility 0.35s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+    /* Bloco de Chamada para Cadastro */
+    .call-to-action {
+      margin: 60px 8%;
+      background: linear-gradient(135deg, var(--navy-light) 0%, var(--bg-card) 100%);
+      padding: 50px 30px;
+      border-radius: 16px;
+      text-align: center;
+      border: 2px solid var(--orange);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
 
-        .modal-dialog {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 400px;
-            max-height: 85vh;
-            max-height: 85dvh;
-            overflow-y: auto;
-            padding: 28px 22px 24px;
-            box-shadow: var(--shadow-modal);
-            position: relative;
-            transform: translateY(30px) scale(0.94);
-            transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-        }
-        .modal-overlay.active .modal-dialog {
-            transform: translateY(0) scale(1);
-        }
+    .call-to-action h2 {
+      margin-bottom: 15px;
+    }
 
-        .modal-close {
-            position: absolute;
-            top: 12px;
-            right: 14px;
-            background: none;
-            border: none;
-            color: #999;
-            font-size: 1.6rem;
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition);
-            z-index: 5;
-            line-height: 1;
-        }
-        .modal-close:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.08);
-        }
+    .call-to-action p {
+      color: var(--text-gray);
+      margin-bottom: 25px;
+    }
 
-        .modal-header {
-            text-align: center;
-            margin-bottom: 22px;
-        }
-        .modal-header .modal-logo {
-            width: 48px;
-            height: 48px;
-            background: var(--accent);
-            border-radius: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #0d0d0d;
-            margin-bottom: 10px;
-            box-shadow: 0 6px 20px var(--accent-glow);
-        }
-        .modal-header h2 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--white);
-        }
-        .modal-header p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
+    .btn-abrir-modal {
+      background-color: var(--orange);
+      color: var(--text-light);
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
 
-        /* ========== FORMULÁRIO ========== */
-        .form-group {
-            margin-bottom: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .form-group label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #ccc;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-        }
-        .form-group input {
-            background: #252525;
-            border: 1.5px solid #333;
-            border-radius: 50px;
-            padding: 13px 18px;
-            font-size: 0.95rem;
-            color: #f5f5f5;
-            font-family: var(--font-stack);
-            transition: all var(--transition);
-            width: 100%;
-            outline: none;
-        }
-        .form-group input::placeholder {
-            color: #666;
-        }
-        .form-group input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(255, 107, 43, 0.08);
-            background: #2a2a2a;
-        }
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .form-options label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #aaa;
-            cursor: pointer;
-        }
-        .form-options input[type="checkbox"] {
-            accent-color: var(--accent);
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-        .form-options a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .form-options a:hover {
-            text-decoration: underline;
-        }
+    .btn-abrir-modal:hover {
+      background-color: var(--orange-hover);
+      transform: scale(1.05);
+    }
 
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            font-size: 1rem;
-            font-weight: 700;
-            background: var(--accent);
-            color: #0d0d0d;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-family: var(--font-stack);
-            box-shadow: 0 6px 22px var(--accent-glow);
-            letter-spacing: 0.3px;
-        }
-        .btn-submit:hover,
-        .btn-submit:focus-visible {
-            background: var(--accent-hover);
-            box-shadow: 0 8px 30px rgba(255, 107, 43, 0.55);
-            transform: translateY(-1px);
-        }
-        .btn-submit:active {
-            transform: scale(0.96);
-        }
+    /* Modal (Telinha Flutuante) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 18px 0;
-            color: #555;
-            font-size: 0.8rem;
-        }
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #333;
-        }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
 
-        .social-login {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        .social-btn {
-            flex: 1;
-            padding: 11px;
-            border-radius: 50px;
-            border: 1.5px solid #333;
-            background: transparent;
-            color: #ccc;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all var(--transition);
-            font-family: var(--font-stack);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .social-btn:hover {
-            border-color: #555;
-            background: #222;
-            color: #fff;
-        }
+    .modal-content {
+      background-color: var(--bg-card);
+      padding: 40px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 450px;
+      position: relative;
+      border: 1px solid var(--navy-light);
+      box-shadow: 0 0 20px rgba(255, 107, 0, 0.2);
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
+    }
 
-        /* ========== TOAST / MENSAGEM ========== */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #2ecc71;
-            color: #000;
-            font-weight: 700;
-            padding: 12px 24px;
-            border-radius: 50px;
-            z-index: 200;
-            font-size: 0.9rem;
-            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.4);
-            transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-            pointer-events: none;
-        }
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-        .toast.error {
-            background: #e74c3c;
-            box-shadow: 0 8px 30px rgba(231, 76, 60, 0.4);
-            color: #fff;
-        }
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
 
-        /* ========== ANIMAÇÕES ========== */
-        @keyframes pulse {
-            0%,
-            100% {
-                box-shadow: 0 6px 24px var(--accent-glow);
-            }
-            50% {
-                box-shadow: 0 6px 38px rgba(255, 107, 43, 0.6);
-            }
-        }
-        .pulse-animation {
-            animation: pulse 2s ease-in-out infinite;
-        }
+    .btn-fechar {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-gray);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
 
-        /* ========== RESPONSIVIDADE EXTRA ========== */
-        @media (max-width: 380px) {
-            .hero-title {
-                font-size: 1.5rem;
-            }
-            .hero-emoji {
-                font-size: 3rem;
-            }
-            .info-card {
-                padding: 14px 12px;
-                gap: 10px;
-            }
-            .info-card-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 1.1rem;
-            }
-            .info-card-text h3 {
-                font-size: 0.9rem;
-            }
-            .info-card-text p {
-                font-size: 0.78rem;
-            }
-            .stat-number {
-                font-size: 1.3rem;
-            }
-            .modal-dialog {
-                padding: 22px 14px 20px;
-            }
-            .btn {
-                padding: 10px 16px;
-                font-size: 0.85rem;
-            }
-        }
-    </style>
+    .btn-fechar:hover {
+      color: var(--orange);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 20px;
+      color: var(--text-light);
+      text-align: center;
+    }
+
+    /* Formulário */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--navy-light);
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--orange);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--orange);
+      color: var(--text-light);
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--orange-hover);
+    }
+  </style>
 </head>
 <body>
-    <!-- CONTAINER DO APP -->
-    <div class="app-container" id="appContainer">
-        <!-- HEADER -->
-        <header class="header" id="header">
-            <div class="logo-area">
-                <div class="logo-icon">💪</div>
-                <div class="logo-text">Iron<span>Fit</span></div>
-            </div>
-            <div class="header-actions">
-                <button class="btn btn-outline btn-sm" onclick="abrirModal()" aria-label="Entrar na conta">
-                    Entrar
-                </button>
-            </div>
-        </header>
 
-        <!-- CONTEÚDO PRINCIPAL -->
-        <main class="main-content">
-            <!-- SEÇÃO HERO -->
-            <section class="hero-section">
-                <div class="hero-emoji">🏋️</div>
-                <h1 class="hero-title">Seu corpo,<br>sua evolução</h1>
-                <p class="hero-subtitle">
-                    Treinos personalizados, nutrição inteligente e acompanhamento real — tudo na palma da sua mão.
-                </p>
-            </section>
+  <header>
+    <div class="logo">PULSE<span>FIT</span></div>
+    <button class="btn-cadastrar-nav" onclick="toggleModal()">Cadastrar</button>
+  </header>
 
-            <!-- CARDS DE DIFERENCIAIS -->
-            <section class="info-cards">
-                <div class="info-card">
-                    <div class="info-card-icon icon-orange">📋</div>
-                    <div class="info-card-text">
-                        <h3>Treinos Personalizados</h3>
-                        <p>Fichas criadas por especialistas, ajustadas ao seu nível e objetivo — do iniciante ao avançado.</p>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-icon icon-green">📊</div>
-                    <div class="info-card-text">
-                        <h3>Progresso em Tempo Real</h3>
-                        <p>Acompanhe cargas, medidas, peso e evolução com gráficos interativos e metas semanais.</p>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-icon icon-blue">🥗</div>
-                    <div class="info-card-text">
-                        <h3>Nutrição Integrada</h3>
-                        <p>Planos alimentares, cálculo de macros e hidratação — porque resultado se constrói na cozinha.</p>
-                    </div>
-                </div>
-            </section>
+  <section class="hero">
+    <h1>TRANSFORME SEU <span>CORPO</span> E SUA MENTE</h1>
+    <p>A estrutura completa que você precisa para alcançar seus objetivos com acompanhamento de alto nível.</p>
+  </section>
 
-            <!-- ESTATÍSTICAS -->
-            <section class="stats-row">
-                <div class="stat-item">
-                    <div class="stat-number">+50K</div>
-                    <div class="stat-label">Alunos ativos</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">4.9</div>
-                    <div class="stat-label">Nota média ★</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">+200</div>
-                    <div class="stat-label">Treinos prontos</div>
-                </div>
-            </section>
-
-            <!-- ÁREA DE LOGIN -->
-            <section class="login-area">
-                <button class="btn btn-primary btn-lg btn-full pulse-animation" onclick="abrirModal()" aria-label="Fazer login no app">
-                    🔐 Fazer Login
-                </button>
-                <p class="login-hint">
-                    Não tem conta? <a href="#" onclick="abrirModal()">Cadastre-se grátis</a>
-                </p>
-            </section>
-        </main>
+  <section class="como-funciona">
+    <h2>COMO FUNCIONA</h2>
+    <div class="grid-passos">
+      <div class="card-passo">
+        <div class="numero">01</div>
+        <h3>Cadastro Rápido</h3>
+        <p>Faça sua inscrição online em menos de 2 minutos e escolha o plano ideal.</p>
+      </div>
+      <div class="card-passo">
+        <div class="numero">02</div>
+        <h3>Avaliação Física</h3>
+        <p>Agende uma conversa com nossos instrutores para mapear suas metas.</p>
+      </div>
+      <div class="card-passo">
+        <div class="numero">03</div>
+        <h3>Treino Personalizado</h3>
+        <p>Acesse sua ficha de treinos no aplicativo e comece a evoluir.</p>
+      </div>
     </div>
+  </section>
 
-    <!-- ==================== MODAL FLUTUANTE DE LOGIN ==================== -->
-    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
-        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-            <!-- Botão fechar -->
-            <button class="modal-close" onclick="fecharModal()" aria-label="Fechar modal de login">
-                ✕
-            </button>
+  <section class="call-to-action">
+    <h2>PRONTO PARA COMEÇAR?</h2>
+    <p>Garanta sua vaga hoje mesmo e ganhe a primeira avaliação física totalmente grátis.</p>
+    <button class="btn-abrir-modal" onclick="toggleModal()">FAZER CADASTRO AGORA</button>
+  </section>
 
-            <!-- Cabeçalho do modal -->
-            <div class="modal-header">
-                <div class="modal-logo">💪</div>
-                <h2 id="modalTitle">Bem-vindo de volta!</h2>
-                <p>Entre na sua conta e continue evoluindo</p>
-            </div>
-
-            <!-- Formulário -->
-            <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="seu@email.com"
-                    required
-                    autocomplete="email"
-                    inputmode="email"
-                    >
-                </div>
-                <div class="form-group">
-                    <label for="senha">Senha</label>
-                    <input
-                    type="password"
-                    id="senha"
-                    name="senha"
-                    placeholder="••••••••"
-                    required
-                    minlength="4"
-                    autocomplete="current-password"
-                    >
-                </div>
-
-                <div class="form-options">
-                    <label>
-                        <input type="checkbox" id="lembrar" name="lembrar">
-                        Lembrar de mim
-                    </label>
-                    <a href="#" onclick="event.preventDefault(); mostrarToast('Link de recuperação enviado!', false);">Esqueci a senha</a>
-                </div>
-
-                <button type="submit" class="btn-submit" id="submitBtn">
-                    Entrar na conta
-                </button>
-            </form>
-
-            <div class="divider">ou continue com</div>
-
-            <div class="social-login">
-                <button class="social-btn" onclick="event.preventDefault(); loginSocial('Google')">
-                    <span>🇬</span> Google
-                </button>
-                <button class="social-btn" onclick="event.preventDefault(); loginSocial('Apple')">
-                    <span>🍎</span> Apple
-                </button>
-            </div>
+  <div class="modal-overlay" id="modalCadastro">
+    <div class="modal-content">
+      <button class="btn-fechar" onclick="toggleModal()">&times;</button>
+      <h3>Cadastro de Aluno</h3>
+      <form onsubmit="salvarCadastro(event)">
+        <div class="form-group">
+          <label for="nome">Nome Completo</label>
+          <input type="text" id="nome" placeholder="Digite seu nome" required>
         </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="Digite seu e-mail" required>
+        </div>
+        <div class="form-group">
+          <label for="telefone">Telefone / WhatsApp</label>
+          <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
+        </div>
+        <button type="submit" class="btn-submit">Finalizar Cadastro</button>
+      </form>
     </div>
+  </div>
 
-    <!-- TOAST DE CONFIRMAÇÃO -->
-    <div class="toast" id="toast"></div>
+  <script>
+    function toggleModal() {
+      const modal = document.getElementById('modalCadastro');
+      modal.classList.toggle('active');
+    }
 
-    <script>
-        // ========== REFERÊNCIAS DO DOM ==========
-        const modalOverlay = document.getElementById('modalOverlay');
-        const appContainer = document.getElementById('appContainer');
-        const header = document.getElementById('header');
-        const toast = document.getElementById('toast');
-        const loginForm = document.getElementById('loginForm');
-        const submitBtn = document.getElementById('submitBtn');
-        let toastTimer = null;
+    function salvarCadastro(event) {
+      event.preventDefault();
+      alert('Cadastro realizado com sucesso! Em breve entraremos em contato.');
+      toggleModal();
+    }
+  </script>
 
-        // ========== ABRIR MODAL ==========
-        function abrirModal() {
-            modalOverlay.classList.add('active');
-            modalOverlay.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden'; // trava scroll do body
-            // Foca no primeiro input após animação
-            setTimeout(() => {
-                const emailInput = document.getElementById('email');
-                if (emailInput) emailInput.focus();
-            }, 400);
-        }
-
-        // ========== FECHAR MODAL ==========
-        function fecharModal() {
-            modalOverlay.classList.remove('active');
-            modalOverlay.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-            // Limpa formulário ao fechar
-            loginForm.reset();
-            // Remove classes de erro visuais se houver
-            document.querySelectorAll('.form-group input').forEach(inp => {
-                inp.style.borderColor = '#333';
-            });
-        }
-
-        // ========== FECHAR AO CLICAR FORA DO MODAL ==========
-        modalOverlay.addEventListener('click', function(event) {
-            if (event.target === modalOverlay) {
-                fecharModal();
-            }
-        });
-
-        // ========== FECHAR COM TECLA ESC ==========
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && modalOverlay.classList.contains('active')) {
-                fecharModal();
-            }
-        });
-
-        // ========== EFEITO SCROLL NO HEADER ==========
-        appContainer.addEventListener('scroll', function() {
-            if (appContainer.scrollTop > 10) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // ========== HANDLE LOGIN ==========
-        function handleLogin(event) {
-            event.preventDefault();
-
-            const email = document.getElementById('email').value.trim();
-            const senha = document.getElementById('senha').value.trim();
-
-            // Validação simples
-            if (!email || !senha) {
-                mostrarToast('Preencha todos os campos!', true);
-                // Destaca campos vazios
-                if (!email) {
-                    document.getElementById('email').style.borderColor = '#e74c3c';
-                    document.getElementById('email').focus();
-                }
-                if (!senha) {
-                    document.getElementById('senha').style.borderColor = '#e74c3c';
-                    if (email) document.getElementById('senha').focus();
-                }
-                return;
-            }
-
-            if (!isValidEmail(email)) {
-                mostrarToast('Insira um e-mail válido!', true);
-                document.getElementById('email').style.borderColor = '#e74c3c';
-                document.getElementById('email').focus();
-                return;
-            }
-
-            if (senha.length < 4) {
-                mostrarToast('Senha deve ter no mínimo 4 caracteres!', true);
-                document.getElementById('senha').style.borderColor = '#e74c3c';
-                document.getElementById('senha').focus();
-                return;
-            }
-
-            // Simula envio
-            submitBtn.textContent = 'Entrando...';
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.7';
-            submitBtn.style.pointerEvents = 'none';
-
-            setTimeout(() => {
-                // Sucesso simulado
-                mostrarToast('✅ Login realizado com sucesso!', false);
-                fecharModal();
-                // Reseta botão
-                submitBtn.textContent = 'Entrar na conta';
-                submitBtn.disabled = false;
-                submitBtn.style.opacity = '1';
-                submitBtn.style.pointerEvents = 'auto';
-            }, 1500);
-        }
-
-        // ========== LOGIN SOCIAL SIMULADO ==========
-        function loginSocial(provider) {
-            mostrarToast(`🔐 Redirecionando para ${provider}...`, false);
-            setTimeout(() => {
-                fecharModal();
-                mostrarToast(`✅ Conectado com ${provider}!`, false);
-            }, 1200);
-        }
-
-        // ========== VALIDAÇÃO DE EMAIL ==========
-        function isValidEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        // ========== TOAST MESSAGES ==========
-        function mostrarToast(mensagem, isError = false) {
-            // Limpa timer anterior
-            if (toastTimer) clearTimeout(toastTimer);
-
-            toast.textContent = mensagem;
-            toast.className = 'toast';
-            if (isError) {
-                toast.classList.add('error');
-            }
-            // Força reflow para reiniciar animação
-            void toast.offsetWidth;
-            toast.classList.add('show');
-
-            toastTimer = setTimeout(() => {
-                toast.classList.remove('show');
-                toastTimer = null;
-            }, 2800);
-        }
-
-        // ========== RESETAR BORDAS DOS INPUTS AO DIGITAR ==========
-        document.querySelectorAll('.form-group input').forEach(input => {
-            input.addEventListener('input', function() {
-                this.style.borderColor = '#333';
-                if (document.activeElement === this) {
-                    this.style.borderColor = 'var(--accent)';
-                }
-            });
-            input.addEventListener('focus', function() {
-                this.style.borderColor = 'var(--accent)';
-            });
-            input.addEventListener('blur', function() {
-                if (!this.value.trim()) {
-                    this.style.borderColor = '#333';
-                }
-            });
-        });
-
-        // ========== INICIALIZAÇÃO ==========
-        console.log('🏋️ IronFit App - Tela Inicial Carregada');
-        console.log('📱 Design responsivo • Modal flutuante • Pronto para uso');
-    </script>
 </body>
 </html>
