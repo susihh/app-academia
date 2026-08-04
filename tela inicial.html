@@ -1,473 +1,1013 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IronFit - Academia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>IronFit - App de Academia</title>
     <style>
-        /* Reset básico */
+        :root {
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #1e1e1e;
+            --accent: #ff6b2b;
+            --accent-hover: #ff8255;
+            --accent-glow: rgba(255, 107, 43, 0.35);
+            --text-primary: #f5f5f5;
+            --text-secondary: #b0b0b0;
+            --text-muted: #777777;
+            --border-subtle: #2a2a2a;
+            --white: #ffffff;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 22px;
+            --radius-xl: 28px;
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5);
+            --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.7);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-stack: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            background: linear-gradient(145deg, #0b0e14 0%, #1a1f2b 100%);
+            font-family: var(--font-stack);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
+            min-height: 100dvh;
+            /* dynamic viewport height */
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
+            align-items: center;
+            overflow-x: hidden;
+            line-height: 1.5;
+            position: relative;
         }
 
-        /* Container principal da tela inicial */
-        .home-container {
-            max-width: 480px;
+        /* ========== CONTAINER PRINCIPAL (SIMULA TELA DO APP) ========== */
+        .app-container {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 40px;
-            padding: 40px 28px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.06);
-            text-align: center;
-            color: #fff;
-            transition: all 0.3s ease;
+            max-width: 480px;
+            /* largura máxima como app mobile */
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: linear-gradient(180deg, #0f0f0f 0%, #141414 40%, #0d0d0d 100%);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.6);
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* Logo / ícone */
-        .logo {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, #f5b041, #e67e22);
-            border-radius: 28px;
+        /* Em telas muito largas, centraliza como um app */
+        @media (min-width: 769px) {
+            .app-container {
+                border-radius: var(--radius-xl);
+                margin: 20px auto;
+                min-height: calc(100vh - 40px);
+                min-height: calc(100dvh - 40px);
+                max-height: calc(100vh - 40px);
+                max-height: calc(100dvh - 40px);
+                border: 1px solid var(--border-subtle);
+            }
+
+            body {
+                background-color: #080808;
+                background-image: radial-gradient(ellipse at center, #1a1a1a 0%, #050505 70%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                max-width: 100%;
+                border-radius: 0;
+                margin: 0;
+                min-height: 100vh;
+                min-height: 100dvh;
+                box-shadow: none;
+            }
+        }
+
+        /* ========== SCROLLBAR CUSTOMIZADA ========== */
+        .app-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .app-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .app-container::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            padding-top: max(16px, env(safe-area-inset-top));
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid transparent;
+            transition: border-color var(--transition);
+        }
+        .header.scrolled {
+            border-bottom-color: var(--border-subtle);
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 48px;
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #0d0d0d;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px var(--accent-glow);
+            letter-spacing: -1px;
+        }
+        .logo-text {
+            font-size: 1.3rem;
             font-weight: 800;
-            color: #1a1f2b;
-            box-shadow: 0 12px 30px rgba(230, 126, 34, 0.4);
-            transform: rotate(-4deg);
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+        .logo-text span {
+            color: var(--accent);
+        }
+        .header-actions {
+            display: flex;
+            gap: 8px;
         }
 
-        .app-title {
-            font-size: 38px;
+        /* ========== BOTÕES ========== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-stack);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            padding: 11px 22px;
+            transition: all var(--transition);
+            text-decoration: none;
+            white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1.5px solid var(--border-subtle);
+        }
+        .btn-outline:hover,
+        .btn-outline:focus-visible {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #0d0d0d;
             font-weight: 700;
-            letter-spacing: -0.5px;
-            background: linear-gradient(to right, #f5b041, #f1c40f);
+            box-shadow: 0 6px 24px var(--accent-glow);
+            border: none;
+        }
+        .btn-primary:hover,
+        .btn-primary:focus-visible {
+            background: var(--accent-hover);
+            box-shadow: 0 8px 32px rgba(255, 107, 43, 0.5);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active {
+            transform: scale(0.95) translateY(0);
+        }
+
+        .btn-lg {
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            border-radius: 50px;
+        }
+        .btn-full {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ========== CONTEÚDO PRINCIPAL ========== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 8px 20px 24px;
+            gap: 28px;
+        }
+
+        /* ========== SEÇÃO HERO ========== */
+        .hero-section {
+            text-align: center;
+            padding: 16px 0 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .hero-emoji {
+            font-size: 4rem;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 30px rgba(255, 107, 43, 0.4));
+            line-height: 1;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-14px);
+            }
+        }
+        .hero-title {
+            font-size: 1.9rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 6px;
+        }
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 320px;
         }
 
-        .slogan {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin-bottom: 32px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding-bottom: 24px;
+        /* ========== CARDS DE INFORMAÇÕES ========== */
+        .info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
-
-        /* Informações / destaques */
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 36px;
-        }
-
         .info-card {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            padding: 18px 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.2s;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 18px 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            border: 1px solid var(--border-subtle);
+            transition: all var(--transition);
+            box-shadow: var(--shadow-card);
         }
-
         .info-card:hover {
-            background: rgba(255, 255, 255, 0.08);
+            border-color: #3a3a3a;
             transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
         }
-
-        .info-card .icon {
-            font-size: 28px;
-            margin-bottom: 6px;
-            display: block;
+        .info-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
         }
-
-        .info-card h4 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #f5b041;
-            margin-bottom: 2px;
+        .icon-orange {
+            background: rgba(255, 107, 43, 0.15);
         }
-
-        .info-card p {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
+        .icon-green {
+            background: rgba(46, 204, 113, 0.15);
+        }
+        .icon-blue {
+            background: rgba(52, 152, 219, 0.15);
+        }
+        .info-card-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+            color: var(--white);
+        }
+        .info-card-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             line-height: 1.4;
         }
 
-        .info-desc {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            padding: 18px 16px;
-            margin-bottom: 32px;
-            border-left: 3px solid #f5b041;
-            text-align: left;
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-        }
-
-        .info-desc strong {
-            color: #f5b041;
-        }
-
-        /* Botão login */
-        .btn-login {
-            width: 100%;
-            padding: 18px 0;
-            background: linear-gradient(135deg, #f5b041, #e67e22);
-            border: none;
-            border-radius: 60px;
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1f2b;
-            cursor: pointer;
-            transition: all 0.25s;
-            box-shadow: 0 10px 30px rgba(230, 126, 34, 0.3);
-            letter-spacing: 1px;
+        /* ========== ESTATÍSTICAS RÁPIDAS ========== */
+        .stats-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            gap: 12px;
+        }
+        .stat-item {
+            flex: 1;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 16px 12px;
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-card);
+        }
+        .stat-number {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ========== ÁREA DO BOTÃO LOGIN ========== */
+        .login-area {
+            display: flex;
+            flex-direction: column;
             gap: 10px;
+            align-items: center;
+            padding: 8px 0;
+        }
+        .login-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .login-hint a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .login-hint a:hover {
+            text-decoration: underline;
         }
 
-        .btn-login:hover {
-            transform: scale(1.02);
-            box-shadow: 0 16px 40px rgba(230, 126, 34, 0.5);
-            background: linear-gradient(135deg, #f7c35c, #e67e22);
-        }
-
-        .btn-login:active {
-            transform: scale(0.97);
-        }
-
-        /* ===== MODAL (bloco flutuante) ===== */
+        /* ========== MODAL / BLOCO FLUTUANTE ========== */
         .modal-overlay {
-            display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            z-index: 1000;
-            animation: fadeIn 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
         }
-
         .modal-overlay.active {
-            display: flex;
+            opacity: 1;
+            visibility: visible;
         }
 
-        .modal-box {
-            background: #1e2533;
-            border-radius: 40px;
-            max-width: 400px;
+        .modal-dialog {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: var(--radius-lg);
             width: 100%;
-            padding: 40px 32px;
+            max-width: 400px;
+            max-height: 85vh;
+            max-height: 85dvh;
+            overflow-y: auto;
+            padding: 28px 22px 24px;
+            box-shadow: var(--shadow-modal);
             position: relative;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06);
-            animation: slideUp 0.35s ease;
+            transform: translateY(30px) scale(0.94);
+            transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .modal-overlay.active .modal-dialog {
+            transform: translateY(0) scale(1);
         }
 
         .modal-close {
             position: absolute;
-            top: 16px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.06);
+            top: 12px;
+            right: 14px;
+            background: none;
             border: none;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 26px;
+            color: #999;
+            font-size: 1.6rem;
             cursor: pointer;
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s;
+            transition: all var(--transition);
+            z-index: 5;
+            line-height: 1;
         }
-
         .modal-close:hover {
-            background: rgba(255, 255, 255, 0.12);
             color: #fff;
-            transform: rotate(90deg);
-        }
-
-        .modal-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-
-        .modal-sub {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 15px;
-            margin-bottom: 28px;
-        }
-
-        .modal-box label {
-            display: block;
-            text-align: left;
-            font-size: 14px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 5px;
-        }
-
-        .modal-box input {
-            width: 100%;
-            padding: 16px 18px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            font-size: 16px;
-            margin-bottom: 20px;
-            outline: none;
-            transition: 0.2s;
-        }
-
-        .modal-box input:focus {
-            border-color: #f5b041;
             background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 4px rgba(245, 176, 65, 0.15);
         }
 
-        .modal-box input::placeholder {
-            color: rgba(255, 255, 255, 0.2);
+        .modal-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+        .modal-header .modal-logo {
+            width: 48px;
+            height: 48px;
+            background: var(--accent);
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #0d0d0d;
+            margin-bottom: 10px;
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+        .modal-header h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+        .modal-header p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
 
-        .btn-modal-login {
+        /* ========== FORMULÁRIO ========== */
+        .form-group {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #ccc;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+        .form-group input {
+            background: #252525;
+            border: 1.5px solid #333;
+            border-radius: 50px;
+            padding: 13px 18px;
+            font-size: 0.95rem;
+            color: #f5f5f5;
+            font-family: var(--font-stack);
+            transition: all var(--transition);
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #f5b041, #e67e22);
-            border: none;
-            border-radius: 60px;
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a1f2b;
+            outline: none;
+        }
+        .form-group input::placeholder {
+            color: #666;
+        }
+        .form-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(255, 107, 43, 0.08);
+            background: #2a2a2a;
+        }
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .form-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #aaa;
             cursor: pointer;
-            transition: 0.25s;
-            margin-top: 6px;
-            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
         }
-
-        .btn-modal-login:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 35px rgba(230, 126, 34, 0.5);
+        .form-options input[type="checkbox"] {
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
         }
-
-        .modal-footer {
-            margin-top: 20px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .modal-footer a {
-            color: #f5b041;
+        .form-options a {
+            color: var(--accent);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
         }
-
-        .modal-footer a:hover {
+        .form-options a:hover {
             text-decoration: underline;
         }
 
-        /* Animações */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            background: var(--accent);
+            color: #0d0d0d;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: var(--font-stack);
+            box-shadow: 0 6px 22px var(--accent-glow);
+            letter-spacing: 0.3px;
+        }
+        .btn-submit:hover,
+        .btn-submit:focus-visible {
+            background: var(--accent-hover);
+            box-shadow: 0 8px 30px rgba(255, 107, 43, 0.55);
+            transform: translateY(-1px);
+        }
+        .btn-submit:active {
+            transform: scale(0.96);
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0;
+            color: #555;
+            font-size: 0.8rem;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #333;
         }
 
-        /* Ajuste responsivo */
-        @media (max-width: 480px) {
-            .home-container {
-                padding: 30px 18px;
+        .social-login {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .social-btn {
+            flex: 1;
+            padding: 11px;
+            border-radius: 50px;
+            border: 1.5px solid #333;
+            background: transparent;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+            font-family: var(--font-stack);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .social-btn:hover {
+            border-color: #555;
+            background: #222;
+            color: #fff;
+        }
+
+        /* ========== TOAST / MENSAGEM ========== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #2ecc71;
+            color: #000;
+            font-weight: 700;
+            padding: 12px 24px;
+            border-radius: 50px;
+            z-index: 200;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.4);
+            transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            pointer-events: none;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        .toast.error {
+            background: #e74c3c;
+            box-shadow: 0 8px 30px rgba(231, 76, 60, 0.4);
+            color: #fff;
+        }
+
+        /* ========== ANIMAÇÕES ========== */
+        @keyframes pulse {
+            0%,
+            100% {
+                box-shadow: 0 6px 24px var(--accent-glow);
             }
-            .app-title {
-                font-size: 30px;
+            50% {
+                box-shadow: 0 6px 38px rgba(255, 107, 43, 0.6);
             }
-            .info-grid {
-                grid-template-columns: 1fr 1fr;
+        }
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* ========== RESPONSIVIDADE EXTRA ========== */
+        @media (max-width: 380px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            .hero-emoji {
+                font-size: 3rem;
+            }
+            .info-card {
+                padding: 14px 12px;
                 gap: 10px;
             }
-            .modal-box {
-                padding: 32px 20px;
+            .info-card-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1.1rem;
+            }
+            .info-card-text h3 {
+                font-size: 0.9rem;
+            }
+            .info-card-text p {
+                font-size: 0.78rem;
+            }
+            .stat-number {
+                font-size: 1.3rem;
+            }
+            .modal-dialog {
+                padding: 22px 14px 20px;
+            }
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.85rem;
             }
         }
     </style>
 </head>
 <body>
-
-    <!-- TELA INICIAL -->
-    <div class="home-container">
-        <!-- Logo -->
-        <div class="logo">🏋️</div>
-        <h1 class="app-title">IronFit</h1>
-        <p class="slogan">SUA EVOLUÇÃO COMEÇA AQUI</p>
-
-        <!-- Grid de informações -->
-        <div class="info-grid">
-            <div class="info-card">
-                <span class="icon">📅</span>
-                <h4>Treinos</h4>
-                <p>Planos personalizados</p>
+    <!-- CONTAINER DO APP -->
+    <div class="app-container" id="appContainer">
+        <!-- HEADER -->
+        <header class="header" id="header">
+            <div class="logo-area">
+                <div class="logo-icon">💪</div>
+                <div class="logo-text">Iron<span>Fit</span></div>
             </div>
-            <div class="info-card">
-                <span class="icon">📊</span>
-                <h4>Progresso</h4>
-                <p>Estatísticas em tempo real</p>
+            <div class="header-actions">
+                <button class="btn btn-outline btn-sm" onclick="abrirModal()" aria-label="Entrar na conta">
+                    Entrar
+                </button>
             </div>
-            <div class="info-card">
-                <span class="icon">🥗</span>
-                <h4>Nutrição</h4>
-                <p>Dietas inteligentes</p>
-            </div>
-            <div class="info-card">
-                <span class="icon">🎯</span>
-                <h4>Metas</h4>
-                <p>Desafios semanais</p>
-            </div>
-        </div>
+        </header>
 
-        <!-- Descrição -->
-        <div class="info-desc">
-            <strong>⚡ IronFit</strong> é o app definitivo para quem busca performance.
-            Acompanhe seus treinos, evolução e nutrição em um só lugar.
-            <span style="display:block; margin-top:8px; font-size:14px; color:rgba(255,255,255,0.4);">
-                Mais de 10.000 alunos já transformaram seus resultados.
-            </span>
-        </div>
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- SEÇÃO HERO -->
+            <section class="hero-section">
+                <div class="hero-emoji">🏋️</div>
+                <h1 class="hero-title">Seu corpo,<br>sua evolução</h1>
+                <p class="hero-subtitle">
+                    Treinos personalizados, nutrição inteligente e acompanhamento real — tudo na palma da sua mão.
+                </p>
+            </section>
 
-        <!-- Botão Login -->
-        <button class="btn-login" id="openModalBtn">
-            🔑 ENTRAR
-        </button>
-        <p style="margin-top:16px; font-size:13px; color:rgba(255,255,255,0.2);">
-            Ainda não tem conta? <a href="#" style="color:#f5b041; text-decoration:none; font-weight:500;">Cadastre-se</a>
-        </p>
+            <!-- CARDS DE DIFERENCIAIS -->
+            <section class="info-cards">
+                <div class="info-card">
+                    <div class="info-card-icon icon-orange">📋</div>
+                    <div class="info-card-text">
+                        <h3>Treinos Personalizados</h3>
+                        <p>Fichas criadas por especialistas, ajustadas ao seu nível e objetivo — do iniciante ao avançado.</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-icon icon-green">📊</div>
+                    <div class="info-card-text">
+                        <h3>Progresso em Tempo Real</h3>
+                        <p>Acompanhe cargas, medidas, peso e evolução com gráficos interativos e metas semanais.</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-icon icon-blue">🥗</div>
+                    <div class="info-card-text">
+                        <h3>Nutrição Integrada</h3>
+                        <p>Planos alimentares, cálculo de macros e hidratação — porque resultado se constrói na cozinha.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ESTATÍSTICAS -->
+            <section class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number">+50K</div>
+                    <div class="stat-label">Alunos ativos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">Nota média ★</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">+200</div>
+                    <div class="stat-label">Treinos prontos</div>
+                </div>
+            </section>
+
+            <!-- ÁREA DE LOGIN -->
+            <section class="login-area">
+                <button class="btn btn-primary btn-lg btn-full pulse-animation" onclick="abrirModal()" aria-label="Fazer login no app">
+                    🔐 Fazer Login
+                </button>
+                <p class="login-hint">
+                    Não tem conta? <a href="#" onclick="abrirModal()">Cadastre-se grátis</a>
+                </p>
+            </section>
+        </main>
     </div>
 
-    <!-- ===== MODAL FLUTUANTE (LOGIN) ===== -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal-box">
+    <!-- ==================== MODAL FLUTUANTE DE LOGIN ==================== -->
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <!-- Botão fechar -->
-            <button class="modal-close" id="closeModalBtn">✕</button>
+            <button class="modal-close" onclick="fecharModal()" aria-label="Fechar modal de login">
+                ✕
+            </button>
 
-            <h2 class="modal-title">Bem-vindo de volta</h2>
-            <p class="modal-sub">Faça login para acessar seu treino</p>
+            <!-- Cabeçalho do modal -->
+            <div class="modal-header">
+                <div class="modal-logo">💪</div>
+                <h2 id="modalTitle">Bem-vindo de volta!</h2>
+                <p>Entre na sua conta e continue evoluindo</p>
+            </div>
 
-            <!-- Formulário de login (apenas visual) -->
-            <form id="loginForm" action="#" method="POST">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" placeholder="seu@email.com" required />
+            <!-- Formulário -->
+            <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="seu@email.com"
+                    required
+                    autocomplete="email"
+                    inputmode="email"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    placeholder="••••••••"
+                    required
+                    minlength="4"
+                    autocomplete="current-password"
+                    >
+                </div>
 
-                <label for="password">Senha</label>
-                <input type="password" id="password" placeholder="••••••••" required />
+                <div class="form-options">
+                    <label>
+                        <input type="checkbox" id="lembrar" name="lembrar">
+                        Lembrar de mim
+                    </label>
+                    <a href="#" onclick="event.preventDefault(); mostrarToast('Link de recuperação enviado!', false);">Esqueci a senha</a>
+                </div>
 
-                <button type="submit" class="btn-modal-login">ENTRAR</button>
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    Entrar na conta
+                </button>
             </form>
 
-            <div class="modal-footer">
-                Esqueceu a senha? <a href="#">Recuperar</a>
-                <br />
-                Novo por aqui? <a href="#">Criar conta</a>
+            <div class="divider">ou continue com</div>
+
+            <div class="social-login">
+                <button class="social-btn" onclick="event.preventDefault(); loginSocial('Google')">
+                    <span>🇬</span> Google
+                </button>
+                <button class="social-btn" onclick="event.preventDefault(); loginSocial('Apple')">
+                    <span>🍎</span> Apple
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript para controlar o modal -->
+    <!-- TOAST DE CONFIRMAÇÃO -->
+    <div class="toast" id="toast"></div>
+
     <script>
-        (function() {
-            const modal = document.getElementById('loginModal');
-            const openBtn = document.getElementById('openModalBtn');
-            const closeBtn = document.getElementById('closeModalBtn');
+        // ========== REFERÊNCIAS DO DOM ==========
+        const modalOverlay = document.getElementById('modalOverlay');
+        const appContainer = document.getElementById('appContainer');
+        const header = document.getElementById('header');
+        const toast = document.getElementById('toast');
+        const loginForm = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('submitBtn');
+        let toastTimer = null;
 
-            // Abrir modal
-            function openModal() {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // evita scroll
+        // ========== ABRIR MODAL ==========
+        function abrirModal() {
+            modalOverlay.classList.add('active');
+            modalOverlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden'; // trava scroll do body
+            // Foca no primeiro input após animação
+            setTimeout(() => {
+                const emailInput = document.getElementById('email');
+                if (emailInput) emailInput.focus();
+            }, 400);
+        }
+
+        // ========== FECHAR MODAL ==========
+        function fecharModal() {
+            modalOverlay.classList.remove('active');
+            modalOverlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            // Limpa formulário ao fechar
+            loginForm.reset();
+            // Remove classes de erro visuais se houver
+            document.querySelectorAll('.form-group input').forEach(inp => {
+                inp.style.borderColor = '#333';
+            });
+        }
+
+        // ========== FECHAR AO CLICAR FORA DO MODAL ==========
+        modalOverlay.addEventListener('click', function(event) {
+            if (event.target === modalOverlay) {
+                fecharModal();
+            }
+        });
+
+        // ========== FECHAR COM TECLA ESC ==========
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                fecharModal();
+            }
+        });
+
+        // ========== EFEITO SCROLL NO HEADER ==========
+        appContainer.addEventListener('scroll', function() {
+            if (appContainer.scrollTop > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // ========== HANDLE LOGIN ==========
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value.trim();
+
+            // Validação simples
+            if (!email || !senha) {
+                mostrarToast('Preencha todos os campos!', true);
+                // Destaca campos vazios
+                if (!email) {
+                    document.getElementById('email').style.borderColor = '#e74c3c';
+                    document.getElementById('email').focus();
+                }
+                if (!senha) {
+                    document.getElementById('senha').style.borderColor = '#e74c3c';
+                    if (email) document.getElementById('senha').focus();
+                }
+                return;
             }
 
-            // Fechar modal
-            function closeModal() {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
+            if (!isValidEmail(email)) {
+                mostrarToast('Insira um e-mail válido!', true);
+                document.getElementById('email').style.borderColor = '#e74c3c';
+                document.getElementById('email').focus();
+                return;
             }
 
-            // Event listeners
-            openBtn.addEventListener('click', openModal);
-            closeBtn.addEventListener('click', closeModal);
+            if (senha.length < 4) {
+                mostrarToast('Senha deve ter no mínimo 4 caracteres!', true);
+                document.getElementById('senha').style.borderColor = '#e74c3c';
+                document.getElementById('senha').focus();
+                return;
+            }
 
-            // Fechar ao clicar no overlay (fundo escuro)
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeModal();
+            // Simula envio
+            submitBtn.textContent = 'Entrando...';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                // Sucesso simulado
+                mostrarToast('✅ Login realizado com sucesso!', false);
+                fecharModal();
+                // Reseta botão
+                submitBtn.textContent = 'Entrar na conta';
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.pointerEvents = 'auto';
+            }, 1500);
+        }
+
+        // ========== LOGIN SOCIAL SIMULADO ==========
+        function loginSocial(provider) {
+            mostrarToast(`🔐 Redirecionando para ${provider}...`, false);
+            setTimeout(() => {
+                fecharModal();
+                mostrarToast(`✅ Conectado com ${provider}!`, false);
+            }, 1200);
+        }
+
+        // ========== VALIDAÇÃO DE EMAIL ==========
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // ========== TOAST MESSAGES ==========
+        function mostrarToast(mensagem, isError = false) {
+            // Limpa timer anterior
+            if (toastTimer) clearTimeout(toastTimer);
+
+            toast.textContent = mensagem;
+            toast.className = 'toast';
+            if (isError) {
+                toast.classList.add('error');
+            }
+            // Força reflow para reiniciar animação
+            void toast.offsetWidth;
+            toast.classList.add('show');
+
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+                toastTimer = null;
+            }, 2800);
+        }
+
+        // ========== RESETAR BORDAS DOS INPUTS AO DIGITAR ==========
+        document.querySelectorAll('.form-group input').forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.borderColor = '#333';
+                if (document.activeElement === this) {
+                    this.style.borderColor = 'var(--accent)';
                 }
             });
-
-            // Fechar com a tecla ESC
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
+            input.addEventListener('focus', function() {
+                this.style.borderColor = 'var(--accent)';
+            });
+            input.addEventListener('blur', function() {
+                if (!this.value.trim()) {
+                    this.style.borderColor = '#333';
                 }
             });
+        });
 
-            // Interceptar o submit do formulário (exemplo apenas)
-            const form = document.getElementById('loginForm');
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                // Aqui você poderia enviar os dados para o backend
-                // Por enquanto, apenas um alerta de demonstração
-                alert('Login realizado com sucesso! (simulação)');
-                closeModal();
-                // Limpar campos (opcional)
-                form.reset();
-            });
-
-            // Prevenir que cliques dentro do modal fechem ele (já tratado pelo target)
-        })();
+        // ========== INICIALIZAÇÃO ==========
+        console.log('🏋️ IronFit App - Tela Inicial Carregada');
+        console.log('📱 Design responsivo • Modal flutuante • Pronto para uso');
     </script>
 </body>
 </html>
