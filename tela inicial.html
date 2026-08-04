@@ -333,12 +333,17 @@
       </div>
     </div>
   </section>
+<script>
+  function toggleModal() {
+    const modal = document.getElementById('modalCadastro');
+    modal.classList.toggle('active');
+  }
 
-  <section class="call-to-action">
-    <h2>PRONTO PARA COMEÇAR?</h2>
-    <p>Garanta sua vaga hoje mesmo e ganhe a primeira avaliação física totalmente grátis.</p>
-    <button class="btn-abrir-modal" onclick="toggleModal()">FAZER CADASTRO AGORA</button>
-  </section>
+  function salvarCadastro(event) {
+    event.preventDefault();
+    window.location.href = 'principal.html'; 
+  }
+</script>
 
   <div class="modal-overlay" id="modalCadastro">
     <div class="modal-content">
