@@ -32,11 +32,20 @@
       --error-red: #ff4d4d;
     }
 
-    /* Animação de Fundo Flutuante */
+    /* Animação de Fundo Flutuante (Intensificada) */
     @keyframes pulseGlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% { 
+        background-position: 0% 50%;
+        background-size: 180% 180%;
+      }
+      50% { 
+        background-position: 100% 50%;
+        background-size: 240% 240%;
+      }
+      100% { 
+        background-position: 0% 50%;
+        background-size: 180% 180%;
+      }
     }
 
     /* Cabeçalho */
@@ -51,7 +60,7 @@
       width: 100%;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid rgba(255, 102, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 102, 0, 0.3);
     }
 
     .logo {
@@ -66,7 +75,7 @@
       color: var(--primary-orange);
     }
 
-    /* Hero Section Animado */
+    /* Hero Section Animado - Movimentação Laranjada Intensificada */
     .hero {
       min-height: 75vh;
       display: flex;
@@ -75,9 +84,10 @@
       align-items: center;
       text-align: center;
       padding: 140px 8% 40px;
-      background: radial-gradient(circle at 50% 40%, rgba(255, 102, 0, 0.2) 0%, transparent 60%);
+      /* Gradiente com mais intensidade de laranja e alcance maior */
+      background: radial-gradient(circle at 50% 50%, rgba(255, 102, 0, 0.55) 0%, rgba(255, 102, 0, 0.2) 40%, transparent 75%);
       background-size: 200% 200%;
-      animation: pulseGlow 8s ease infinite;
+      animation: pulseGlow 6s ease-in-out infinite;
     }
 
     .hero-text h1 {
@@ -85,19 +95,22 @@
       line-height: 1.2;
       margin-bottom: 20px;
       animation: fadeInDown 1s ease forwards;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8); /* Melhora leitura com o fundo brilhante */
     }
 
     .hero-text h1 span {
       color: var(--primary-orange);
+      text-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
     }
 
     .hero-text p {
-      color: var(--text-gray);
+      color: #e0e0e0;
       font-size: 1.2rem;
       max-width: 700px;
       margin: 0 auto;
       animation: fadeInUp 1s ease 0.3s forwards;
       opacity: 0;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
     }
 
     /* Seção Como Funciona */
@@ -134,7 +147,7 @@
 
     .step-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 10px 25px rgba(255, 102, 0, 0.2);
+      box-shadow: 0 10px 25px rgba(255, 102, 0, 0.25);
     }
 
     .step-number {
@@ -184,7 +197,7 @@
     .cta-card:hover {
       transform: translateY(-6px);
       border-color: var(--primary-orange);
-      box-shadow: 0 12px 35px rgba(255, 102, 0, 0.25);
+      box-shadow: 0 12px 35px rgba(255, 102, 0, 0.3);
     }
 
     .cta-card h3 {
@@ -317,7 +330,7 @@
       padding: 12px;
       border-radius: 6px;
       border: 1px solid #222;
-      background-color: #000000; /* Inputs totalmente pretos */
+      background-color: #000000;
       color: #fff;
       font-size: 1rem;
       outline: none;
