@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academia PulseFit</title>
+  <title>Academia PowerFit</title>
   <style>
-    /* Reset e Variáveis de Cores */
+    /* Reset básico e fontes */
     * {
       margin: 0;
       padding: 0;
@@ -13,195 +13,182 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    :root {
-      --bg-dark: #0a0a0a;        /* Preto Puro */
-      --bg-card: #141414;        /* Grafite Bem Escuro */
-      --bg-card-hover: #1f1f1f;  /* Escuro levemente destacado */
-      --orange: #ff5500;         /* Laranja Vibrante */
-      --orange-hover: #ff7700;   /* Laranja Claro para Hover */
-      --black-border: #262626;   /* Bordas Escuras */
-      --text-light: #ffffff;     /* Branco para legibilidade */
-      --text-gray: #a1a1aa;      /* Cinza Claro */
-    }
-
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-      line-height: 1.6;
+      background-color: #0d0d0d;
+      color: #ffffff;
+      overflow-x: hidden;
     }
 
-    /* Cabeçalho */
+    /* Cores principais */
+    :root {
+      --primary-orange: #ff6600;
+      --hover-orange: #e65c00;
+      --bg-dark: #121212;
+      --card-bg: #1e1e1e;
+      --text-gray: #a0a0a0;
+    }
+
+    /* Cabeçalho / Navbar */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px 8%;
-      background: rgba(10, 10, 10, 0.95);
-      border-bottom: 2px solid var(--orange);
-      position: sticky;
+      background-color: rgba(18, 18, 18, 0.95);
+      position: fixed;
+      width: 100%;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 102, 0, 0.2);
     }
 
     .logo {
       font-size: 1.8rem;
       font-weight: 800;
-      color: var(--text-light);
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .logo span {
-      color: var(--orange);
+      color: var(--primary-orange);
     }
 
-    .btn-cadastrar-nav {
-      background-color: var(--orange);
-      color: #000;
-      padding: 10px 24px;
-      border: none;
-      border-radius: 25px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(255, 85, 0, 0.4);
-    }
-
-    .btn-cadastrar-nav:hover {
-      background-color: var(--orange-hover);
-      box-shadow: 0 0 25px rgba(255, 85, 0, 0.7);
-      transform: translateY(-2px);
-    }
-
-    /* Banner Principal */
+    /* Hero Section (Apresentação) */
     .hero {
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 100px 20px;
-      background: linear-gradient(180deg, #141414 0%, var(--bg-dark) 100%);
-      border-bottom: 1px solid var(--black-border);
+      justify-content: space-between;
+      padding: 120px 8% 60px;
+      background: radial-gradient(circle at 80% 20%, rgba(255, 102, 0, 0.15) 0%, transparent 40%);
     }
 
-    .hero h1 {
-      font-size: 3rem;
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero-text h1 {
+      font-size: 3.2rem;
+      line-height: 1.2;
       margin-bottom: 20px;
     }
 
-    .hero h1 span {
-      color: var(--orange);
-      text-shadow: 0 0 10px rgba(255, 85, 0, 0.3);
+    .hero-text h1 span {
+      color: var(--primary-orange);
     }
 
-    .hero p {
-      max-width: 600px;
+    .hero-text p {
       color: var(--text-gray);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
       margin-bottom: 30px;
     }
 
-    /* Seção Como Funciona */
-    .como-funciona {
+    /* Card de Chamada para Cadastro */
+    .cta-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 102, 0, 0.3);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      text-align: center;
+      max-width: 380px;
+      width: 100%;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-orange);
+    }
+
+    .cta-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .cta-card p {
+      color: var(--text-gray);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .btn-orange {
+      background-color: var(--primary-orange);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-orange:hover {
+      background-color: var(--hover-orange);
+    }
+
+    /* Seção "Como Funciona" */
+    .how-it-works {
       padding: 80px 8%;
+      background-color: var(--bg-dark);
       text-align: center;
     }
 
-    .como-funciona h2 {
+    .section-title {
       font-size: 2.2rem;
-      margin-bottom: 40px;
-      position: relative;
-      display: inline-block;
+      margin-bottom: 50px;
     }
 
-    .como-funciona h2::after {
-      content: '';
-      position: absolute;
-      width: 60%;
-      height: 4px;
-      background: var(--orange);
-      bottom: -10px;
-      left: 20%;
-      border-radius: 2px;
-      box-shadow: 0 0 10px var(--orange);
+    .section-title span {
+      color: var(--primary-orange);
     }
 
-    .grid-passos {
+    .steps-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 30px;
-      margin-top: 20px;
     }
 
-    .card-passo {
-      background-color: var(--bg-card);
+    .step-card {
+      background-color: var(--card-bg);
       padding: 30px;
       border-radius: 12px;
-      border: 1px solid var(--black-border);
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      border-top: 4px solid var(--primary-orange);
+      text-align: left;
     }
 
-    .card-passo:hover {
-      transform: translateY(-8px);
-      border-color: var(--orange);
-      background-color: var(--bg-card-hover);
-      box-shadow: 0 5px 20px rgba(255, 85, 0, 0.2);
-    }
-
-    .card-passo .numero {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--orange);
-      margin-bottom: 15px;
-    }
-
-    /* Bloco de Chamada para Cadastro */
-    .call-to-action {
-      margin: 60px 8%;
-      background: radial-gradient(circle at center, #1f1f1f 0%, var(--bg-card) 100%);
-      padding: 50px 30px;
-      border-radius: 16px;
-      text-align: center;
-      border: 2px solid var(--orange);
-      box-shadow: 0 0 25px rgba(255, 85, 0, 0.25);
-    }
-
-    .call-to-action h2 {
-      margin-bottom: 15px;
-    }
-
-    .call-to-action p {
-      color: var(--text-gray);
-      margin-bottom: 25px;
-    }
-
-    .btn-abrir-modal {
-      background-color: var(--orange);
-      color: #000;
-      padding: 15px 40px;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 30px;
+    .step-number {
+      font-size: 2rem;
       font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(255, 85, 0, 0.4);
+      color: var(--primary-orange);
+      margin-bottom: 15px;
     }
 
-    .btn-abrir-modal:hover {
-      background-color: var(--orange-hover);
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(255, 85, 0, 0.8);
+    .step-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
     }
 
-    /* Modal (Telinha Flutuante) */
+    .step-card p {
+      color: var(--text-gray);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* MODAL FLUTUANTE DE CADASTRO */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -217,14 +204,13 @@
     }
 
     .modal-content {
-      background-color: var(--bg-card);
+      background: var(--card-bg);
       padding: 40px;
       border-radius: 16px;
-      width: 90%;
+      width: 100%;
       max-width: 450px;
+      border: 1px solid var(--primary-orange);
       position: relative;
-      border: 1px solid var(--orange);
-      box-shadow: 0 0 30px rgba(255, 85, 0, 0.3);
       transform: translateY(-20px);
       transition: transform 0.3s ease;
     }
@@ -233,28 +219,26 @@
       transform: translateY(0);
     }
 
-    .btn-fechar {
+    .close-btn {
       position: absolute;
       top: 15px;
       right: 20px;
       background: none;
       border: none;
-      color: var(--text-gray);
+      color: #fff;
       font-size: 1.8rem;
       cursor: pointer;
     }
 
-    .btn-fechar:hover {
-      color: var(--orange);
-    }
-
-    .modal-content h3 {
+    .modal-content h2 {
       margin-bottom: 20px;
-      color: var(--text-light);
       text-align: center;
     }
 
-    /* Formulário */
+    .modal-content h2 span {
+      color: var(--primary-orange);
+    }
+
     .form-group {
       margin-bottom: 20px;
     }
@@ -269,116 +253,155 @@
     .form-group input {
       width: 100%;
       padding: 12px;
-      border-radius: 8px;
-      border: 1px solid var(--black-border);
-      background-color: var(--bg-dark);
-      color: var(--text-light);
+      border-radius: 6px;
+      border: 1px solid #333;
+      background-color: #0d0d0d;
+      color: #fff;
+      font-size: 1rem;
       outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     .form-group input:focus {
-      border-color: var(--orange);
-      box-shadow: 0 0 8px rgba(255, 85, 0, 0.4);
+      border-color: var(--primary-orange);
     }
 
-    .btn-submit {
-      width: 100%;
-      padding: 14px;
-      background-color: var(--orange);
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    /* TELA PRINCIPAL (Escondida por padrão) */
+    #main-screen {
+      display: none;
+      min-height: 100vh;
+      padding: 120px 8% 60px;
+      text-align: center;
     }
 
-    .btn-submit:hover {
-      background-color: var(--orange-hover);
-      box-shadow: 0 0 15px rgba(255, 85, 0, 0.5);
+    .dashboard-card {
+      background-color: var(--card-bg);
+      border: 1px solid rgba(255, 102, 0, 0.3);
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 600px;
+      margin: 40px auto 0;
+    }
+
+    /* Responsividade */
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+      }
+      .hero-text h1 {
+        font-size: 2.5rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">PULSE<span>FIT</span></div>
-    <button class="btn-cadastrar-nav" onclick="toggleModal()">Cadastrar</button>
-  </header>
+  <div id="landing-page">
+    <header>
+      <div class="logo">POWER<span>FIT</span></div>
+    </header>
 
-  <section class="hero">
-    <h1>TRANSFORME SEU <span>CORPO</span> E SUA MENTE</h1>
-    <p>A estrutura completa que você precisa para alcançar seus objetivos com acompanhamento de alto nível.</p>
-  </section>
-
-  <section class="como-funciona">
-    <h2>COMO FUNCIONA</h2>
-    <div class="grid-passos">
-      <div class="card-passo">
-        <div class="numero">01</div>
-        <h3>Cadastro Rápido</h3>
-        <p>Faça sua inscrição online em menos de 2 minutos e escolha o plano ideal.</p>
+    <section class="hero">
+      <div class="hero-text">
+        <h1>TRANSFORME SEU CORPO E SUA <span>MENTE</span></h1>
+        <p>A melhor estrutura de treinos, equipamentos de ponta e acompanhamento profissional para você atingir seus objetivos mais rápido.</p>
       </div>
-      <div class="card-passo">
-        <div class="numero">02</div>
-        <h3>Avaliação Física</h3>
-        <p>Agende uma conversa com nossos instrutores para mapear suas metas.</p>
-      </div>
-      <div class="card-passo">
-        <div class="numero">03</div>
-        <h3>Treino Personalizado</h3>
-        <p>Acesse sua ficha de treinos no aplicativo e comece a evoluir.</p>
-      </div>
-    </div>
-  </section>
-<script>
-  function toggleModal() {
-    const modal = document.getElementById('modalCadastro');
-    modal.classList.toggle('active');
-  }
 
-  function salvarCadastro(event) {
-    event.preventDefault();
-    window.location.href = 'principal.html'; 
-  }
-</script>
+      <div class="cta-card" onclick="openModal()">
+        <h3>Comece Hoje Mesmo</h3>
+        <p>Faça seu cadastro rápido e tenha acesso imediato à nossa plataforma de treinos.</p>
+        <button class="btn-orange">Cadastrar Aluno</button>
+      </div>
+    </section>
 
-  <div class="modal-overlay" id="modalCadastro">
+    <section class="how-it-works">
+      <h2 class="section-title">COMO <span>FUNCIONA</span></h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h4>Faça o Cadastro</h4>
+          <p>Preencha seus dados em nosso formulário simples em menos de 1 minuto.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h4>Escolha o Treino</h4>
+          <p>Acesse a plataforma principal e escolha a rotina ideal para seu nível.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h4>Treine & Evolua</h4>
+          <p>Acompanhe sua evolução diariamente com o suporte do nosso time.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
-      <button class="btn-fechar" onclick="toggleModal()">&times;</button>
-      <h3>Cadastro de Aluno</h3>
-      <form onsubmit="salvarCadastro(event)">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <h2>CADASTRO DE <span>ALUNO</span></h2>
+      <form id="cadForm" onsubmit="handleRegister(event)">
         <div class="form-group">
           <label for="nome">Nome Completo</label>
           <input type="text" id="nome" placeholder="Digite seu nome" required>
         </div>
         <div class="form-group">
           <label for="email">E-mail</label>
-          <input type="email" id="email" placeholder="Digite seu e-mail" required>
+          <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
         </div>
         <div class="form-group">
-          <label for="telefone">Telefone / WhatsApp</label>
-          <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="Crie uma senha" required>
         </div>
-        <button type="submit" class="btn-submit">Finalizar Cadastro</button>
+        <button type="submit" class="btn-orange">Concluir Cadastro</button>
       </form>
     </div>
   </div>
 
+  <div id="main-screen">
+    <header>
+      <div class="logo">POWER<span>FIT</span></div>
+      <div>Área do Aluno</div>
+    </header>
+    
+    <div class="dashboard-card">
+      <h2 style="font-size: 2rem; margin-bottom: 15px;">Bem-vindo(a), <span id="userNameDisplay" style="color: var(--primary-orange);">Aluno</span>!</h2>
+      <p style="color: var(--text-gray); margin-bottom: 30px;">Seu cadastro foi realizado com sucesso. Esta é a tela principal da sua área de membros.</p>
+      <button class="btn-orange" style="max-width: 250px; margin: 0 auto;" onclick="location.reload()">Sair / Voltar</button>
+    </div>
+  </div>
+
   <script>
-    function toggleModal() {
-      const modal = document.getElementById('modalCadastro');
-      modal.classList.toggle('active');
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('active');
     }
 
-    function salvarCadastro(event) {
-      event.preventDefault();
-      alert('Cadastro realizado com sucesso! Em breve entraremos em contato.');
-      toggleModal();
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    // Fecha o modal se clicar fora do conteúdo
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Função que processa o cadastro e altera a tela
+    function handleRegister(event) {
+      event.preventDefault(); // Impede o recarregamento da página
+      
+      const nameInput = document.getElementById('nome').value;
+      document.getElementById('userNameDisplay').innerText = nameInput;
+
+      // Oculta a landing page e fecha o modal
+      closeModal();
+      document.getElementById('landing-page').style.display = 'none';
+
+      // Exibe a tela principal
+      document.getElementById('main-screen').style.display = 'block';
     }
   </script>
-
 </body>
 </html>
