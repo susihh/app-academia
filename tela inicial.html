@@ -428,4 +428,52 @@
     
     <div class="dashboard-card">
       <h2 style="font-size: 2rem; margin-bottom: 15px;">Bem-vindo(a), <span id="userNameDisplay" style="color: var(--primary-orange);">Aluno</span>!</h2>
-    
+      <p style="color: var(--text-gray); margin-bottom: 30px;">Seu cadastro foi realizado com sucesso. Esta é a tela principal da sua área de membros.</p>
+      <button class="btn-orange" style="max-width: 250px; margin: 0 auto; animation: none;" onclick="location.reload()">Sair / Voltar</button>
+    </div>
+  </div>
+
+  <script>
+    // Modal controls
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    function handleRegister(event) {
+      event.preventDefault();
+      const nameInput = document.getElementById('nome').value;
+      document.getElementById('userNameDisplay').innerText = nameInput;
+
+      closeModal();
+      document.getElementById('landing-page').style.display = 'none';
+      document.getElementById('main-screen').style.display = 'block';
+    }
+
+    // Scroll Reveal Animation (Animação ao rolar a página)
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      const windowHeight = window.innerHeight;
+
+      reveals.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const revealPoint = 100;
+
+        if (elementTop < windowHeight - revealPoint) {
+          element.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Executa no carregamento inicial
+  </script>
+</body>
+</html>
