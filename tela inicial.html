@@ -21,10 +21,10 @@
       background-color: #000000; /* Preto absoluto */
       color: #ffffff;
       overflow-x: hidden;
+      padding-bottom: 80px; /* Espaço para o menu inferior fixo */
     }
 
     :root {
-      /* Tom de laranja exatamente igual ao da palavra FIT (#ff6600) */
       --primary-orange: #ff6600;
       --hover-orange: #ff6600;
       --bg-dark: #050505;
@@ -33,7 +33,7 @@
       --error-red: #ff4d4d;
     }
 
-    /* Animação de Fundo Flutuante (Usando a tonalidade exata #ff6600) */
+    /* Animação de Fundo Flutuante */
     @keyframes pulseGlow {
       0% { 
         background-position: 0% 50%;
@@ -249,7 +249,7 @@
       transform: translateY(0);
     }
 
-    /* Modal Flutuante com Animação Zoom/Fade */
+    /* Modal Flutuante */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -325,7 +325,7 @@
       font-size: 0.9rem;
     }
 
-    .form-group input {
+    .form-group input, .form-group select {
       width: 100%;
       padding: 12px;
       border-radius: 6px;
@@ -337,12 +337,8 @@
       transition: border-color 0.3s;
     }
 
-    .form-group input:focus {
+    .form-group input:focus, .form-group select:focus {
       border-color: var(--primary-orange);
-    }
-
-    .form-group input:invalid:focus {
-      border-color: var(--error-red);
     }
 
     /* Keyframes Gerais */
@@ -356,22 +352,196 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Tela Principal do Aluno */
+    /* ==========================================
+       TELA PRINCIPAL DO ALUNO (DASHBOARD)
+    ========================================== */
     #main-screen {
       display: none;
       min-height: 100vh;
-      padding: 120px 8% 60px;
-      text-align: center;
+      padding: 110px 8% 100px;
       animation: fadeInUp 0.6s ease forwards;
     }
 
-    .dashboard-card {
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .dash-card {
       background-color: var(--card-bg);
-      border: 1px solid rgba(255, 102, 0, 0.4);
-      padding: 40px;
+      border: 1px solid rgba(255, 102, 0, 0.3);
+      padding: 30px;
       border-radius: 16px;
-      max-width: 600px;
-      margin: 40px auto 0;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .dash-card:hover {
+      border-color: var(--primary-orange);
+      transform: translateY(-5px);
+    }
+
+    .dash-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dash-card h3 span {
+      color: var(--primary-orange);
+    }
+
+    /* Card 1: Porcentagem de Frequência */
+    .freq-box {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .freq-number {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: var(--primary-orange);
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 14px;
+      background-color: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      border: 1px solid #333;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 85%; /* Porcentagem padrão de frequência */
+      background: linear-gradient(90deg, #ff8800, var(--primary-orange));
+      border-radius: 10px;
+      transition: width 1s ease-in-out;
+    }
+
+    .freq-info {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+
+    /* Card 2: Tipo de Exercício */
+    .exercise-select-group {
+      margin-top: 15px;
+    }
+
+    .exercise-select-group label {
+      display: block;
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .exercise-select-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 102, 0, 0.5);
+      background-color: #000;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .exercise-select-group select:focus {
+      border-color: var(--primary-orange);
+    }
+
+    .exercise-details {
+      margin-top: 18px;
+      padding: 12px;
+      background-color: #050505;
+      border-left: 3px solid var(--primary-orange);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    /* Card 3: Plano Nutricional */
+    .nutrition-list {
+      list-style: none;
+      margin-top: 15px;
+    }
+
+    .nutrition-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+    }
+
+    .nutrition-list li:last-child {
+      border-bottom: none;
+    }
+
+    .meal-title {
+      color: var(--primary-orange);
+      font-weight: 600;
+    }
+
+    .meal-desc {
+      color: var(--text-gray);
+      text-align: right;
+    }
+
+    /* Menu de Navegação Inferior (Barra de Ícones/Páginas) */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(5, 5, 5, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 102, 0, 0.3);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0 8px;
+      z-index: 999;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-gray);
+      text-decoration: none;
+      font-size: 0.75rem;
+      transition: color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .nav-item svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+      margin-bottom: 4px;
+    }
+
+    .nav-item.active, .nav-item:hover {
+      color: var(--primary-orange);
+      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -433,6 +603,15 @@
           <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
         </div>
         <div class="form-group">
+          <label for="tipoTreinoInput">Objetivo Principal</label>
+          <select id="tipoTreinoInput">
+            <option value="Hipertrofia (Ganho de Massa)">Hipertrofia (Ganho de Massa)</option>
+            <option value="Emagrecimento & Definição">Emagrecimento & Definição</option>
+            <option value="Resistência & Cardiorrespiratório">Resistência & Cardiorrespiratório</option>
+            <option value="Força & Powerlifting">Força & Powerlifting</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label for="senha">Senha</label>
           <input type="password" id="senha" placeholder="Crie uma senha" required minlength="6">
         </div>
@@ -447,11 +626,74 @@
       <div style="font-weight: 600; color: var(--primary-orange);">Área do Aluno</div>
     </header>
     
-    <div class="dashboard-card">
-      <h2 style="font-size: 2rem; margin-bottom: 15px;">Bem-vindo(a), <span id="userNameDisplay" style="color: var(--primary-orange);">Aluno</span>!</h2>
-      <p style="color: var(--text-gray); margin-bottom: 30px;">Seu cadastro foi realizado com sucesso. Esta é a tela principal da sua área de membros.</p>
-      <button class="btn-orange" style="max-width: 250px; margin: 0 auto; animation: none;" onclick="location.reload()">Sair / Voltar</button>
+    <div class="dashboard-header">
+      <h2 style="font-size: 2.2rem;">Bem-vindo(a), <span id="userNameDisplay" style="color: var(--primary-orange);">Aluno</span>!</h2>
+      <p style="color: var(--text-gray); margin-top: 5px;">Acompanhe seu progresso, altere suas rotinas e consulte sua nutrição.</p>
     </div>
+
+    <div class="dashboard-grid">
+      
+      <div class="dash-card">
+        <h3><span>📊</span> Frequência na Academia</h3>
+        <div class="freq-box">
+          <div class="freq-number" id="freqDisplay">85%</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="freqBar"></div>
+          </div>
+          <p class="freq-info">Você compareceu a <strong>17 dos 20 treinos</strong> este mês. Mantenha o ritmo!</p>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <h3><span>🏋️‍♂️</span> Seu Plano de Treino</h3>
+        <p style="color: var(--text-gray); font-size: 0.9rem;">Você pode alterar seu modalidade/foco de treino quando quiser:</p>
+        
+        <div class="exercise-select-group">
+          <label for="workoutSelect">Foco Atual do Exercício:</label>
+          <select id="workoutSelect" onchange="updateWorkoutAndNutrition(this.value)">
+            <option value="Hipertrofia (Ganho de Massa)">Hipertrofia (Ganho de Massa)</option>
+            <option value="Emagrecimento & Definição">Emagrecimento & Definição</option>
+            <option value="Resistência & Cardiorrespiratório">Resistência & Cardiorrespiratório</option>
+            <option value="Força & Powerlifting">Força & Powerlifting</option>
+          </select>
+        </div>
+
+        <div class="exercise-details" id="workoutDetails">
+          Carregando rotina...
+        </div>
+      </div>
+
+      <div class="dash-card" style="grid-column: span 1 / -1;">
+        <h3><span>🥗</span> Plano Nutricional Aconselhado</h3>
+        <p style="color: var(--text-gray); font-size: 0.9rem;">Refeições adaptadas automaticamente para seu foco de exercício atual:</p>
+        
+        <ul class="nutrition-list" id="nutritionList">
+          </ul>
+      </div>
+
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="switchTab('dashboard')">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Início</span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('treinos')">
+        <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 6.29 3.43 4.86 2 3.43 3.43 2 4.86 3.43 6.29 2 7.71 3.43 9.14 2 10.57 3.43 12 7 20.57 15.57 17 12 20.57 13.43 22z"/></svg>
+        <span>Treinos</span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('nutricao')">
+        <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.46 3.9 3.45 4.38L6.45 22h2.1l0-8.62C10.54 12.9 12 11.12 12 9V2h-1v7zm7-7c-2.21 0-4 1.79-4 4v5c0 1.66 1.34 3 3 3v7h2V2h-1z"/></svg>
+        <span>Nutrição</span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('perfil')">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <span>Perfil</span>
+      </button>
+    </nav>
   </div>
 
   <script>
@@ -472,17 +714,89 @@
       if (e.key === 'Escape') closeModal();
     });
 
+    // Função ao concluir o Cadastro
     function handleRegister(event) {
       event.preventDefault();
       const nameInput = document.getElementById('nome').value.trim();
+      const selectedGoal = document.getElementById('tipoTreinoInput').value;
       
       if (nameInput) {
         document.getElementById('userNameDisplay').innerText = nameInput;
+        document.getElementById('workoutSelect').value = selectedGoal;
+        updateWorkoutAndNutrition(selectedGoal);
+        
         closeModal();
         
+        // Transição para a nova página do aluno
         document.getElementById('landing-page').style.display = 'none';
         document.getElementById('main-screen').style.display = 'block';
         window.scrollTo(0, 0);
+      }
+    }
+
+    // Base de dados para treino e dieta personalizada
+    const dataPlans = {
+      "Hipertrofia (Ganho de Massa)": {
+        details: "<strong>Foco:</strong> Cargas elevadas com repetições entre 8 e 12. Frequência ideal: 4 a 5x por semana.",
+        nutrition: [
+          { title: "Café da Manhã", desc: "4 ovos mexidos, aveia e banana" },
+          { title: "Almoço", desc: "Arroz integral, peito de frango e vegetais" },
+          { title: "Lanche / Pré-Treino", desc: "Batata doce e frango desfiado" },
+          { title: "Jantar", desc: "Carne magra, mandioca e salada verde" }
+        ]
+      },
+      "Emagrecimento & Definição": {
+        details: "<strong>Foco:</strong> Treino circuitos, déficit calórico leve e cárdio pós-treino (HIIT).",
+        nutrition: [
+          { title: "Café da Manhã", desc: "Omelete de 3 claras + 1 ovo, mamão com chias" },
+          { title: "Almoço", desc: "File de peixe grelhado, brócolis e salada à vontade" },
+          { title: "Lanche / Pré-Treino", desc: "Iogurte desnatado com castanhas" },
+          { title: "Jantar", desc: "Sopa proteica de legumes com frango" }
+        ]
+      },
+      "Resistência & Cardiorrespiratório": {
+        details: "<strong>Foco:</strong> Treinos funcionais, corrida, bike e alta densidade de repetições (15-20).",
+        nutrition: [
+          { title: "Café da Manhã", desc: "Pão integral com ovos e suco de laranja" },
+          { title: "Almoço", desc: "Macarrão integral com patinho moído e salada" },
+          { title: "Lanche / Pré-Treino", desc: "Banana com pasta de amendoim" },
+          { title: "Jantar", desc: "Arroz, feijão e filé de frango" }
+        ]
+      },
+      "Força & Powerlifting": {
+        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Terra) com cargas máximas e descanso longo.",
+        nutrition: [
+          { title: "Café da Manhã", desc: "Panqueca de banana, ovos, aveia e mel" },
+          { title: "Almoço", desc: "Carne vermelha magra, arroz, feijão e salada" },
+          { title: "Lanche / Pré-Treino", desc: "Vitamina de leite, Whey e banana" },
+          { title: "Jantar", desc: "Ovos cozidos, batata inglesa e frango" }
+        ]
+      }
+    };
+
+    // Atualiza o treino e o plano nutricional dinamicamente
+    function updateWorkoutAndNutrition(goal) {
+      const plan = dataPlans[goal] || dataPlans["Hipertrofia (Ganho de Massa)"];
+      
+      document.getElementById('workoutDetails').innerHTML = plan.details;
+      
+      const nutList = document.getElementById('nutritionList');
+      nutList.innerHTML = plan.nutrition.map(item => `
+        <li>
+          <span class="meal-title">${item.title}</span>
+          <span class="meal-desc">${item.desc}</span>
+        </li>
+      `).join('');
+    }
+
+    // Troca de páginas/abas no menu inferior
+    function switchTab(tabName) {
+      const items = document.querySelectorAll('.nav-item');
+      items.forEach(item => item.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      if (tabName !== 'dashboard') {
+        alert(`Você clicou no botão "${tabName.toUpperCase()}". Esta seção pode ser expandida com novos conteúdos para essa página!`);
       }
     }
 
