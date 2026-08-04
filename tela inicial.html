@@ -24,15 +24,16 @@
     }
 
     :root {
+      /* Tom padrão exatamente igual ao do logotipo POWERFIT */
       --primary-orange: #ff6600;
       --hover-orange: #e65c00;
-      --bg-dark: #050505;  /* Fundo de seções mais escuro */
-      --card-bg: #0f0f0f; /* Cards mais escuros */
+      --bg-dark: #050505;
+      --card-bg: #0f0f0f;
       --text-gray: #a0a0a0;
       --error-red: #ff4d4d;
     }
 
-    /* Animação de Fundo Flutuante (Intensificada) */
+    /* Animação de Fundo Flutuante (Intensificada no mesmo tom) */
     @keyframes pulseGlow {
       0% { 
         background-position: 0% 50%;
@@ -75,7 +76,7 @@
       color: var(--primary-orange);
     }
 
-    /* Hero Section Animado - Movimentação Laranjada Intensificada */
+    /* Hero Section Animado */
     .hero {
       min-height: 75vh;
       display: flex;
@@ -84,7 +85,6 @@
       align-items: center;
       text-align: center;
       padding: 140px 8% 40px;
-      /* Gradiente com mais intensidade de laranja e alcance maior */
       background: radial-gradient(circle at 50% 50%, rgba(255, 102, 0, 0.55) 0%, rgba(255, 102, 0, 0.2) 40%, transparent 75%);
       background-size: 200% 200%;
       animation: pulseGlow 6s ease-in-out infinite;
@@ -95,7 +95,7 @@
       line-height: 1.2;
       margin-bottom: 20px;
       animation: fadeInDown 1s ease forwards;
-      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8); /* Melhora leitura com o fundo brilhante */
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
     }
 
     .hero-text h1 span {
@@ -147,7 +147,7 @@
 
     .step-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 10px 25px rgba(255, 102, 0, 0.25);
+      box-shadow: 0 10px 25px rgba(255, 102, 0, 0.3);
     }
 
     .step-number {
@@ -197,7 +197,7 @@
     .cta-card:hover {
       transform: translateY(-6px);
       border-color: var(--primary-orange);
-      box-shadow: 0 12px 35px rgba(255, 102, 0, 0.3);
+      box-shadow: 0 12px 35px rgba(255, 102, 0, 0.35);
     }
 
     .cta-card h3 {
@@ -367,7 +367,7 @@
 
     .dashboard-card {
       background-color: var(--card-bg);
-      border: 1px solid rgba(255, 102, 0, 0.3);
+      border: 1px solid rgba(255, 102, 0, 0.4);
       padding: 40px;
       border-radius: 16px;
       max-width: 600px;
