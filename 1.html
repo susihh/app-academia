@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseFit - Área do Aluno</title>
+  <style>
+    /* Reset e Variáveis de Cores */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --bg-dark: #0f0f10;
+      --bg-card: #18181c;
+      --orange: #ff6b00;
+      --orange-hover: #e05e00;
+      --navy: #001f3f;
+      --navy-light: #002855;
+      --text-light: #f4f4f9;
+      --text-gray: #a0a0aa;
+      --green-success: #28a745;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      padding-bottom: 50px;
+    }
+
+    /* Cabeçalho do Dashboard */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background: rgba(15, 15, 16, 0.95);
+      border-bottom: 2px solid var(--navy-light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-light);
+    }
+
+    .logo span {
+      color: var(--orange);
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--text-light);
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    /* Boas-Vindas */
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--bg-card) 100%);
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid var(--navy-light);
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .welcome-banner h1 span {
+      color: var(--orange);
+    }
+
+    .welcome-banner p {
+      color: var(--text-gray);
+    }
+
+    .tag-plano {
+      background-color: var(--navy-light);
+      color: var(--orange);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      border: 1px solid var(--orange);
+    }
+
+    /* Grid do Dashboard */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid var(--navy-light);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--navy-light);
+      padding-bottom: 10px;
+    }
+
+    .card-header h2 {
+      font-size: 1.3rem;
+      color: var(--text-light);
+    }
+
+    /* Bloco do Treino */
+    .treino-info h3 {
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+
+    .treino-lista {
+      list-style: none;
+      margin: 15px 0;
+    }
+
+    .treino-lista li {
+      background-color: var(--bg-dark);
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border-left: 3px solid var(--orange);
+      font-size: 0.95rem;
+    }
+
+    .btn-alterar-treino {
+      width: 100%;
+      background-color: transparent;
+      color: var(--orange);
+      border: 1px solid var(--orange);
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn-alterar-treino:hover {
+      background-color: var(--orange);
+      color: var(--text-light);
+    }
+
+    /* Bloco de Frequência / Dias da Semana */
+    .dias-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .dia-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--bg-dark);
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--navy-light);
+    }
+
+    .dia-nome {
+      font-weight: 600;
+    }
+
+    /* Checkbox Estilizado */
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checkbox-container input {
+      display: none;
+    }
+
+    .checkmark {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--orange);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .checkbox-container input:checked + .checkmark {
+      background-color: var(--green-success);
+      border-color: var(--green-success);
+    }
+
+    .checkmark::after {
+      content: '✓';
+      color: white;
+      font-weight: bold;
+      display: none;
+    }
+
+    .checkbox-container input:checked + .checkmark::after {
+      display: block;
+    }
+
+    .checkbox-container input:checked ~ .status-text {
+      color: var(--green-success);
+      font-weight: bold;
+    }
+
+    .status-text {
+      font-size: 0.85rem;
+      color: var(--text-gray);
+    }
+
+    /* Bloco Dieta / Nutrição */
+    .refeicao-item {
+      background-color: var(--bg-dark);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 12px;
+      border: 1px solid var(--navy-light);
+      transition: opacity 0.3s;
+    }
+
+    .refeicao-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .refeicao-titulo {
+      font-weight: bold;
+      color: var(--orange);
+    }
+
+    .refeicao-desc {
+      font-size: 0.9rem;
+      color: var(--text-gray);
+      margin-bottom: 10px;
+    }
+
+    /* Modal (Telinha Flutuante para Mudar Treino) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-content {
+      background-color: var(--bg-card);
+      padding: 35px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+      border: 1px solid var(--navy-light);
+      box-shadow: 0 0 25px rgba(255, 107, 0, 0.25);
+    }
+
+    .btn-fechar {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-gray);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    .btn-fechar:hover {
+      color: var(--orange);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 15px;
+      color: var(--text-light);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+
+    .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--navy-light);
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      outline: none;
+    }
+
+    .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--orange);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--orange);
+      color: var(--text-light);
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--orange-hover);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">PULSE<span>FIT</span></div>
+    <div class="user-profile">
+      <div class="user-avatar">CS</div>
+      <span class="user-name">Carlos Silva</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="welcome-banner">
+      <div>
+        <h1>Bem-vindo de volta, <span>Carlos!</span></h1>
+        <p>Mantenha a consistência. O seu progresso depende do seu esforço diário.</p>
+      </div>
+      <div class="tag-plano">Plano VIP Performance</div>
+    </section>
+
+    <div class="dashboard-grid">
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Meu Treino</h2>
+          <span style="color: var(--orange); font-size: 0.85rem; font-weight: bold;">Foco: Hipertrofia</span>
+        </div>
+        <div class="treino-info">
+          <h3 id="nomeTreino">Ficha A - Peito e Tríceps</h3>
+          <ul class="treino-lista" id="listaExercicios">
+            <li>Supino Reto com Barra - 4x10</li>
+            <li>Supino Inclinado c/ Halteres - 3x12</li>
+            <li>Crossover na Polia - 4x12</li>
+            <li>Tríceps Testa - 3x10</li>
+            <li>Tríceps Pulley - 4x12</li>
+          </ul>
+          <button class="btn-alterar-treino" onclick="toggleModal()">Solicitar Alteração de Treino</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Frequência Semanal</h2>
+          <span style="color: var(--text-gray); font-size: 0.85rem;">Marque os dias concluídos</span>
+        </div>
+        <div class="dias-grid">
+          
+          <div class="dia-item">
+            <span class="dia-nome">Segunda-feira</span>
+            <label class="checkbox-container">
+              <input type="checkbox" checked onchange="atualizarStatus(this)">
+              <span class="checkmark"></span>
+              <span class="status-text">Concluído</span>
+            </label>
+          </div>
+
+          <div class="dia-item">
+            <span class="dia-nome">Terça-feira</span>
+            <label class="checkbox-container">
+              <input type="checkbox" checked onchange="atualizarStatus(this)">
+              <span class="checkmark"></span>
+              <span class="status-text">Concluído</span>
+            </label>
+          </div>
+
+          <div class="dia-item">
+            <span class="dia-nome">Quarta-feira</span>
+            <label class="checkbox-container">
+              <input type="checkbox" onchange="atualizarStatus(this)">
+              <span class="checkmark"></span>
+              <span class="status-text">Pendente</span>
+            </label>
+          </div>
+
+          <div class="dia-item">
+            <span class="dia-nome">Quinta-feira</span>
+            <label class="checkbox-container">
+              <input type="checkbox" onchange="atualizarStatus(this)">
+              <span class="checkmark"></span>
+              <span class="status-text">Pendente</span>
+            </label>
+          </div>
+
+          <div class="dia-item">
+            <span class="dia-nome">Sexta-feira</span>
+            <label class="checkbox-container">
+              <input type="checkbox" onchange="atualizarStatus(this)">
+              <span class="checkmark"></span>
+              <span class="status-text">Pendente</span>
+            </label>
+          </div>
+
+          <div class="dia-item">
+            <span class="dia-nome">Sábado</span>
+            <label class="checkbox-container">
+              <input type="checkbox" onchange="atualizarStatus(this)">
+              <span class="checkmark"></span>
+              <span class="status-text">Pendente</span>
+            </label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Plano Nutricional</h2>
+          <span style="color: var(--text-gray); font-size: 0.85rem;">Metas do Dia</span>
+        </div>
+        
+        <div class="refeicao-item">
+          <div class="refeicao-header">
+            <span class="refeicao-titulo">Café da Manhã (07:30)</span>
+            <label class="checkbox-container">
+              <input type="checkbox" checked onchange="marcarRefeicao(this)">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <p class="refeicao-desc">3 Ovos mexidos, 2 fatias de pão integral, 1 copo de suco de laranja natural.</p>
+        </div>
+
+        <div class="refeicao-item">
+          <div class="refeicao-header">
+            <span class="refeicao-titulo">Almoço (12:30)</span>
+            <label class="checkbox-container">
+              <input type="checkbox" checked onchange="marcarRefeicao(this)">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <p class="refeicao-desc">150g de Peito de Frango grelhado, 100g de Arroz Integral, Feijão e Salada à vontade.</p>
+        </div>
+
+        <div class="refeicao-item">
+          <div class="refeicao-header">
+            <span class="refeicao-titulo">Lanche da Tarde (16:00)</span>
+            <label class="checkbox-container">
+              <input type="checkbox" onchange="marcarRefeicao(this)">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <p class="refeicao-desc">1 Dose de Whey Protein + 1 Banana + 30g de Aveia.</p>
+        </div>
+
+        <div class="refeicao-item">
+          <div class="refeicao-header">
+            <span class="refeicao-titulo">Jantar (20:00)</span>
+            <label class="checkbox-container">
+              <input type="checkbox" onchange="marcarRefeicao(this)">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <p class="refeicao-desc">150g de Patinho moído ou Peixe, 120g de Batata Doce e Salada verde.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalTreino">
+    <div class="modal-content">
+      <button class="btn-fechar" onclick="toggleModal()">&times;</button>
+      <h3>Alteração de Treino</h3>
+      <form onsubmit="solicitarNovoTreino(event)">
+        <div class="form-group">
+          <label for="objetivo">Novo Objetivo Principal</label>
+          <select id="objetivo" required>
+            <option value="">Selecione...</option>
+            <option value="hipertrofia">Hipertrofia / Ganho de Massa</option>
+            <option value="emagrecimento">Emagrecimento / Perda de Gordura</option>
+            <option value="resistencia">Resistência / Condicionamento</option>
+            <option value="forca">Ganho de Força</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="frequencia">Dias disponíveis por semana</label>
+          <select id="frequencia" required>
+            <option value="3">3 Dias na semana</option>
+            <option value="4">4 Dias na semana</option>
+            <option value="5">5 Dias na semana</option>
+            <option value="6">6 Dias na semana</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="observacoes">Observações ou Dores/Lesões</label>
+          <textarea id="observacoes" rows="3" placeholder="Ex: Sinto dor no ombro direito ao fazer supino..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Enviar para o Instrutor</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Alternar visibilidade do Modal
+    function toggleModal() {
+      const modal = document.getElementById('modalTreino');
+      modal.classList.toggle('active');
+    }
+
+    // Atualiza o texto do status do dia
+    function atualizarStatus(checkbox) {
+      const statusText = checkbox.parentElement.querySelector('.status-text');
+      if (checkbox.checked) {
+        statusText.textContent = 'Concluído';
+      } else {
+        statusText.textContent = 'Pendente';
+      }
+    }
+
+    // Marcação visual da refeição
+    function marcarRefeicao(checkbox) {
+      const refeicaoCard = checkbox.closest('.refeicao-item');
+      if (checkbox.checked) {
+        refeicaoCard.style.opacity = '0.5';
+      } else {
+        refeicaoCard.style.opacity = '1';
+      }
+    }
+
+    // Simulação do envio de alteração de treino
+    function solicitarNovoTreino(event) {
+      event.preventDefault();
+      alert('Sua solicitação de alteração foi enviada para o seu instrutor! Em breve seu treino será atualizado.');
+      toggleModal();
+    }
+  </script>
+
+</body>
+</html>
