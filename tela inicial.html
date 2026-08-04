@@ -18,10 +18,10 @@
     }
 
     body {
-      background-color: #000000; /* Preto absoluto */
+      background-color: #000000;
       color: #ffffff;
       overflow-x: hidden;
-      padding-bottom: 80px; /* Espaço para o menu inferior fixo */
+      padding-bottom: 80px;
     }
 
     :root {
@@ -353,7 +353,7 @@
     }
 
     /* ==========================================
-       TELA PRINCIPAL DO ALUNO (DASHBOARD)
+       ÁREA DO ALUNO & NAVEGAÇÃO DE PÁGINAS
     ========================================== */
     #main-screen {
       display: none;
@@ -364,7 +364,16 @@
 
     .dashboard-header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
+    }
+
+    .tab-page {
+      display: none;
+    }
+
+    .tab-page.active {
+      display: block;
+      animation: fadeInUp 0.4s ease forwards;
     }
 
     .dashboard-grid {
@@ -401,7 +410,7 @@
       color: var(--primary-orange);
     }
 
-    /* Card 1: Porcentagem de Frequência */
+    /* Frequência */
     .freq-box {
       text-align: center;
       padding: 10px 0;
@@ -427,7 +436,7 @@
 
     .progress-bar {
       height: 100%;
-      width: 85%; /* Porcentagem padrão de frequência */
+      width: 85%;
       background: linear-gradient(90deg, #ff8800, var(--primary-orange));
       border-radius: 10px;
       transition: width 1s ease-in-out;
@@ -438,11 +447,7 @@
       font-size: 0.9rem;
     }
 
-    /* Card 2: Tipo de Exercício */
-    .exercise-select-group {
-      margin-top: 15px;
-    }
-
+    /* Exercício Select */
     .exercise-select-group label {
       display: block;
       color: var(--text-gray);
@@ -462,32 +467,34 @@
       outline: none;
     }
 
-    .exercise-select-group select:focus {
-      border-color: var(--primary-orange);
-    }
-
     .exercise-details {
       margin-top: 18px;
-      padding: 12px;
+      padding: 15px;
       background-color: #050505;
       border-left: 3px solid var(--primary-orange);
       border-radius: 4px;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: #ddd;
     }
 
-    /* Card 3: Plano Nutricional */
+    /* Plano Nutricional na Aba Nutrição */
+    .nutrition-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
     .nutrition-list {
       list-style: none;
       margin-top: 15px;
     }
 
     .nutrition-list li {
-      padding: 10px 0;
+      padding: 16px 0;
       border-bottom: 1px solid #1a1a1a;
       display: flex;
       justify-content: space-between;
-      font-size: 0.95rem;
+      align-items: center;
+      font-size: 1rem;
     }
 
     .nutrition-list li:last-child {
@@ -497,6 +504,7 @@
     .meal-title {
       color: var(--primary-orange);
       font-weight: 600;
+      font-size: 1.1rem;
     }
 
     .meal-desc {
@@ -504,7 +512,7 @@
       text-align: right;
     }
 
-    /* Menu de Navegação Inferior (Barra de Ícones/Páginas) */
+    /* Menu de Navegação Inferior */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -627,69 +635,94 @@
     </header>
     
     <div class="dashboard-header">
-      <h2 style="font-size: 2.2rem;">Bem-vindo(a), <span id="userNameDisplay" style="color: var(--primary-orange);">Aluno</span>!</h2>
-      <p style="color: var(--text-gray); margin-top: 5px;">Acompanhe seu progresso, altere suas rotinas e consulte sua nutrição.</p>
+      <h2 style="font-size: 2rem;">Bem-vindo(a), <span id="userNameDisplay" style="color: var(--primary-orange);">Aluno</span>!</h2>
     </div>
 
-    <div class="dashboard-grid">
-      
-      <div class="dash-card">
-        <h3><span>📊</span> Frequência na Academia</h3>
-        <div class="freq-box">
-          <div class="freq-number" id="freqDisplay">85%</div>
-          <div class="progress-bar-container">
-            <div class="progress-bar" id="freqBar"></div>
+    <div id="tab-dashboard" class="tab-page active">
+      <div class="dashboard-grid">
+        <div class="dash-card">
+          <h3><span>📊</span> Porcentagem de Frequência</h3>
+          <div class="freq-box">
+            <div class="freq-number" id="freqDisplay">85%</div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="freqBar"></div>
+            </div>
+            <p class="freq-info">Você compareceu a <strong>17 dos 20 treinos</strong> este mês. Mantenha o foco!</p>
           </div>
-          <p class="freq-info">Você compareceu a <strong>17 dos 20 treinos</strong> este mês. Mantenha o ritmo!</p>
-        </div>
-      </div>
-
-      <div class="dash-card">
-        <h3><span>🏋️‍♂️</span> Seu Plano de Treino</h3>
-        <p style="color: var(--text-gray); font-size: 0.9rem;">Você pode alterar seu modalidade/foco de treino quando quiser:</p>
-        
-        <div class="exercise-select-group">
-          <label for="workoutSelect">Foco Atual do Exercício:</label>
-          <select id="workoutSelect" onchange="updateWorkoutAndNutrition(this.value)">
-            <option value="Hipertrofia (Ganho de Massa)">Hipertrofia (Ganho de Massa)</option>
-            <option value="Emagrecimento & Definição">Emagrecimento & Definição</option>
-            <option value="Resistência & Cardiorrespiratório">Resistência & Cardiorrespiratório</option>
-            <option value="Força & Powerlifting">Força & Powerlifting</option>
-          </select>
         </div>
 
-        <div class="exercise-details" id="workoutDetails">
-          Carregando rotina...
+        <div class="dash-card">
+          <h3><span>🏋️‍♂️</span> Mudar Tipo de Exercício</h3>
+          <div class="exercise-select-group">
+            <label for="workoutSelect">Selecione sua modalidade:</label>
+            <select id="workoutSelect" onchange="updateWorkoutAndNutrition(this.value)">
+              <option value="Hipertrofia (Ganho de Massa)">Hipertrofia (Ganho de Massa)</option>
+              <option value="Emagrecimento & Definição">Emagrecimento & Definição</option>
+              <option value="Resistência & Cardiorrespiratório">Resistência & Cardiorrespiratório</option>
+              <option value="Força & Powerlifting">Força & Powerlifting</option>
+            </select>
+          </div>
+
+          <div class="exercise-details" id="workoutDetails">
+            Carregando resumo do treino...
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="dash-card" style="grid-column: span 1 / -1;">
-        <h3><span>🥗</span> Plano Nutricional Aconselhado</h3>
-        <p style="color: var(--text-gray); font-size: 0.9rem;">Refeições adaptadas automaticamente para seu foco de exercício atual:</p>
-        
-        <ul class="nutrition-list" id="nutritionList">
-          </ul>
+    <div id="tab-treinos" class="tab-page">
+      <div class="dashboard-grid">
+        <div class="dash-card" style="grid-column: span 1 / -1;">
+          <h3><span>💪</span> Rotina Semanal Recomendada</h3>
+          <p style="color: var(--text-gray); margin-bottom: 15px;">Acompanhe sua série detalhada conforme seu objetivo escolhido:</p>
+          <div class="exercise-details" id="fullWorkoutView">
+            Carregando rotina completa...
+          </div>
+        </div>
       </div>
+    </div>
 
+    <div id="tab-nutricao" class="tab-page">
+      <div class="nutrition-container">
+        <div class="dash-card">
+          <h3><span>🥗</span> Plano Nutricional Aconselhado</h3>
+          <p style="color: var(--text-gray); font-size: 0.95rem;">Sua dieta é atualizada automaticamente de acordo com o tipo de exercício que você seleciona:</p>
+          
+          <ul class="nutrition-list" id="nutritionList">
+            </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-perfil" class="tab-page">
+      <div class="dashboard-grid">
+        <div class="dash-card" style="grid-column: span 1 / -1;">
+          <h3><span>👤</span> Seus Dados Cadastrais</h3>
+          <p style="margin-bottom: 10px;"><strong>Nome:</strong> <span id="profileName">Aluno</span></p>
+          <p style="margin-bottom: 10px;"><strong>Status da Matrícula:</strong> <span style="color: #00ff66;">Ativa</span></p>
+          <p style="margin-bottom: 25px;"><strong>Plano:</strong> PowerFit VIP</p>
+          <button class="btn-orange" style="max-width: 200px; animation: none;" onclick="location.reload()">Sair da Conta</button>
+        </div>
+      </div>
     </div>
 
     <nav class="bottom-nav">
-      <button class="nav-item active" onclick="switchTab('dashboard')">
+      <button class="nav-item active" onclick="switchTab('dashboard', this)">
         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         <span>Início</span>
       </button>
 
-      <button class="nav-item" onclick="switchTab('treinos')">
+      <button class="nav-item" onclick="switchTab('treinos', this)">
         <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 6.29 3.43 4.86 2 3.43 3.43 2 4.86 3.43 6.29 2 7.71 3.43 9.14 2 10.57 3.43 12 7 20.57 15.57 17 12 20.57 13.43 22z"/></svg>
         <span>Treinos</span>
       </button>
 
-      <button class="nav-item" onclick="switchTab('nutricao')">
+      <button class="nav-item" onclick="switchTab('nutricao', this)">
         <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.46 3.9 3.45 4.38L6.45 22h2.1l0-8.62C10.54 12.9 12 11.12 12 9V2h-1v7zm7-7c-2.21 0-4 1.79-4 4v5c0 1.66 1.34 3 3 3v7h2V2h-1z"/></svg>
         <span>Nutrição</span>
       </button>
 
-      <button class="nav-item" onclick="switchTab('perfil')">
+      <button class="nav-item" onclick="switchTab('perfil', this)">
         <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         <span>Perfil</span>
       </button>
@@ -714,7 +747,6 @@
       if (e.key === 'Escape') closeModal();
     });
 
-    // Função ao concluir o Cadastro
     function handleRegister(event) {
       event.preventDefault();
       const nameInput = document.getElementById('nome').value.trim();
@@ -722,22 +754,22 @@
       
       if (nameInput) {
         document.getElementById('userNameDisplay').innerText = nameInput;
+        document.getElementById('profileName').innerText = nameInput;
         document.getElementById('workoutSelect').value = selectedGoal;
-        updateWorkoutAndNutrition(selectedGoal);
         
+        updateWorkoutAndNutrition(selectedGoal);
         closeModal();
         
-        // Transição para a nova página do aluno
         document.getElementById('landing-page').style.display = 'none';
         document.getElementById('main-screen').style.display = 'block';
         window.scrollTo(0, 0);
       }
     }
 
-    // Base de dados para treino e dieta personalizada
     const dataPlans = {
       "Hipertrofia (Ganho de Massa)": {
         details: "<strong>Foco:</strong> Cargas elevadas com repetições entre 8 e 12. Frequência ideal: 4 a 5x por semana.",
+        fullWorkout: "<strong>Treino A:</strong> Peito & Tríceps<br><strong>Treino B:</strong> Costas & Bíceps<br><strong>Treino C:</strong> Pernas completas & Ombros",
         nutrition: [
           { title: "Café da Manhã", desc: "4 ovos mexidos, aveia e banana" },
           { title: "Almoço", desc: "Arroz integral, peito de frango e vegetais" },
@@ -746,16 +778,18 @@
         ]
       },
       "Emagrecimento & Definição": {
-        details: "<strong>Foco:</strong> Treino circuitos, déficit calórico leve e cárdio pós-treino (HIIT).",
+        details: "<strong>Foco:</strong> Treinos circuitos, déficit calórico e cardio pós-treino (HIIT).",
+        fullWorkout: "<strong>Treino A:</strong> Full Body Circuito<br><strong>Treino B:</strong> Cardio HIIT 30 min<br><strong>Treino C:</strong> Musculação adaptada + Abdominais",
         nutrition: [
           { title: "Café da Manhã", desc: "Omelete de 3 claras + 1 ovo, mamão com chias" },
-          { title: "Almoço", desc: "File de peixe grelhado, brócolis e salada à vontade" },
+          { title: "Almoço", desc: "Filé de peixe grelhado, brócolis e salada à vontade" },
           { title: "Lanche / Pré-Treino", desc: "Iogurte desnatado com castanhas" },
           { title: "Jantar", desc: "Sopa proteica de legumes com frango" }
         ]
       },
       "Resistência & Cardiorrespiratório": {
-        details: "<strong>Foco:</strong> Treinos funcionais, corrida, bike e alta densidade de repetições (15-20).",
+        details: "<strong>Foco:</strong> Funcional, corrida, bike e alta densidade de repetições (15-20).",
+        fullWorkout: "<strong>Treino A:</strong> Corrida contínua + Core<br><strong>Treino B:</strong> Circuito de agilidade<br><strong>Treino C:</strong> Bike indoor + Resistência muscular",
         nutrition: [
           { title: "Café da Manhã", desc: "Pão integral com ovos e suco de laranja" },
           { title: "Almoço", desc: "Macarrão integral com patinho moído e salada" },
@@ -764,7 +798,8 @@
         ]
       },
       "Força & Powerlifting": {
-        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Terra) com cargas máximas e descanso longo.",
+        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Terra) com carga máxima.",
+        fullWorkout: "<strong>Treino A:</strong> Supino Reto + Auxiliares<br><strong>Treino B:</strong> Agachamento Livre + Pernas<br><strong>Treino C:</strong> Levantamento Terra + Dorsal",
         nutrition: [
           { title: "Café da Manhã", desc: "Panqueca de banana, ovos, aveia e mel" },
           { title: "Almoço", desc: "Carne vermelha magra, arroz, feijão e salada" },
@@ -774,11 +809,11 @@
       }
     };
 
-    // Atualiza o treino e o plano nutricional dinamicamente
     function updateWorkoutAndNutrition(goal) {
       const plan = dataPlans[goal] || dataPlans["Hipertrofia (Ganho de Massa)"];
       
       document.getElementById('workoutDetails').innerHTML = plan.details;
+      document.getElementById('fullWorkoutView').innerHTML = plan.fullWorkout;
       
       const nutList = document.getElementById('nutritionList');
       nutList.innerHTML = plan.nutrition.map(item => `
@@ -789,15 +824,22 @@
       `).join('');
     }
 
-    // Troca de páginas/abas no menu inferior
-    function switchTab(tabName) {
+    function switchTab(tabName, btnElement) {
+      const pages = document.querySelectorAll('.tab-page');
+      pages.forEach(page => page.classList.remove('active'));
+
+      const selectedPage = document.getElementById(`tab-${tabName}`);
+      if (selectedPage) {
+        selectedPage.classList.add('active');
+      }
+
       const items = document.querySelectorAll('.nav-item');
       items.forEach(item => item.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-
-      if (tabName !== 'dashboard') {
-        alert(`Você clicou no botão "${tabName.toUpperCase()}". Esta seção pode ser expandida com novos conteúdos para essa página!`);
+      if (btnElement) {
+        btnElement.classList.add('active');
       }
+
+      window.scrollTo(0, 0);
     }
 
     function revealOnScroll() {
