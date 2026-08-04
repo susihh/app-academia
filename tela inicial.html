@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IronFit - Academia</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b0e14 0%, #1a1f2b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Container principal da tela inicial */
+        .home-container {
+            max-width: 480px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 40px 28px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.06);
+            text-align: center;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        /* Logo / ícone */
+        .logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #f5b041, #e67e22);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 48px;
+            font-weight: 800;
+            color: #1a1f2b;
+            box-shadow: 0 12px 30px rgba(230, 126, 34, 0.4);
+            transform: rotate(-4deg);
+        }
+
+        .app-title {
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #f5b041, #f1c40f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+        }
+
+        .slogan {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 24px;
+        }
+
+        /* Informações / destaques */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 18px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.2s;
+        }
+
+        .info-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .info-card .icon {
+            font-size: 28px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .info-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f5b041;
+            margin-bottom: 2px;
+        }
+
+        .info-card p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.4;
+        }
+
+        .info-desc {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 18px 16px;
+            margin-bottom: 32px;
+            border-left: 3px solid #f5b041;
+            text-align: left;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .info-desc strong {
+            color: #f5b041;
+        }
+
+        /* Botão login */
+        .btn-login {
+            width: 100%;
+            padding: 18px 0;
+            background: linear-gradient(135deg, #f5b041, #e67e22);
+            border: none;
+            border-radius: 60px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1f2b;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 10px 30px rgba(230, 126, 34, 0.3);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-login:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 40px rgba(230, 126, 34, 0.5);
+            background: linear-gradient(135deg, #f7c35c, #e67e22);
+        }
+
+        .btn-login:active {
+            transform: scale(0.97);
+        }
+
+        /* ===== MODAL (bloco flutuante) ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #1e2533;
+            border-radius: 40px;
+            max-width: 400px;
+            width: 100%;
+            padding: 40px 32px;
+            position: relative;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06);
+            animation: slideUp 0.35s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 26px;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .modal-sub {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+
+        .modal-box label {
+            display: block;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 5px;
+        }
+
+        .modal-box input {
+            width: 100%;
+            padding: 16px 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .modal-box input:focus {
+            border-color: #f5b041;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(245, 176, 65, 0.15);
+        }
+
+        .modal-box input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-modal-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #f5b041, #e67e22);
+            border: none;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1f2b;
+            cursor: pointer;
+            transition: 0.25s;
+            margin-top: 6px;
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-modal-login:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 35px rgba(230, 126, 34, 0.5);
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-footer a {
+            color: #f5b041;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .modal-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Ajuste responsivo */
+        @media (max-width: 480px) {
+            .home-container {
+                padding: 30px 18px;
+            }
+            .app-title {
+                font-size: 30px;
+            }
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .modal-box {
+                padding: 32px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TELA INICIAL -->
+    <div class="home-container">
+        <!-- Logo -->
+        <div class="logo">🏋️</div>
+        <h1 class="app-title">IronFit</h1>
+        <p class="slogan">SUA EVOLUÇÃO COMEÇA AQUI</p>
+
+        <!-- Grid de informações -->
+        <div class="info-grid">
+            <div class="info-card">
+                <span class="icon">📅</span>
+                <h4>Treinos</h4>
+                <p>Planos personalizados</p>
+            </div>
+            <div class="info-card">
+                <span class="icon">📊</span>
+                <h4>Progresso</h4>
+                <p>Estatísticas em tempo real</p>
+            </div>
+            <div class="info-card">
+                <span class="icon">🥗</span>
+                <h4>Nutrição</h4>
+                <p>Dietas inteligentes</p>
+            </div>
+            <div class="info-card">
+                <span class="icon">🎯</span>
+                <h4>Metas</h4>
+                <p>Desafios semanais</p>
+            </div>
+        </div>
+
+        <!-- Descrição -->
+        <div class="info-desc">
+            <strong>⚡ IronFit</strong> é o app definitivo para quem busca performance.
+            Acompanhe seus treinos, evolução e nutrição em um só lugar.
+            <span style="display:block; margin-top:8px; font-size:14px; color:rgba(255,255,255,0.4);">
+                Mais de 10.000 alunos já transformaram seus resultados.
+            </span>
+        </div>
+
+        <!-- Botão Login -->
+        <button class="btn-login" id="openModalBtn">
+            🔑 ENTRAR
+        </button>
+        <p style="margin-top:16px; font-size:13px; color:rgba(255,255,255,0.2);">
+            Ainda não tem conta? <a href="#" style="color:#f5b041; text-decoration:none; font-weight:500;">Cadastre-se</a>
+        </p>
+    </div>
+
+    <!-- ===== MODAL FLUTUANTE (LOGIN) ===== -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-box">
+            <!-- Botão fechar -->
+            <button class="modal-close" id="closeModalBtn">✕</button>
+
+            <h2 class="modal-title">Bem-vindo de volta</h2>
+            <p class="modal-sub">Faça login para acessar seu treino</p>
+
+            <!-- Formulário de login (apenas visual) -->
+            <form id="loginForm" action="#" method="POST">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="seu@email.com" required />
+
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="••••••••" required />
+
+                <button type="submit" class="btn-modal-login">ENTRAR</button>
+            </form>
+
+            <div class="modal-footer">
+                Esqueceu a senha? <a href="#">Recuperar</a>
+                <br />
+                Novo por aqui? <a href="#">Criar conta</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript para controlar o modal -->
+    <script>
+        (function() {
+            const modal = document.getElementById('loginModal');
+            const openBtn = document.getElementById('openModalBtn');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            // Abrir modal
+            function openModal() {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // evita scroll
+            }
+
+            // Fechar modal
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // Event listeners
+            openBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+
+            // Fechar ao clicar no overlay (fundo escuro)
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Fechar com a tecla ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // Interceptar o submit do formulário (exemplo apenas)
+            const form = document.getElementById('loginForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Aqui você poderia enviar os dados para o backend
+                // Por enquanto, apenas um alerta de demonstração
+                alert('Login realizado com sucesso! (simulação)');
+                closeModal();
+                // Limpar campos (opcional)
+                form.reset();
+            });
+
+            // Prevenir que cliques dentro do modal fechem ele (já tratado pelo target)
+        })();
+    </script>
+</body>
+</html>
