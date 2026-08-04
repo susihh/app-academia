@@ -56,20 +56,22 @@
 
     /* Hero Section (Apresentação) */
     .hero {
-      min-height: 100vh;
+      min-height: 70vh;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
-      padding: 120px 8% 60px;
-      background: radial-gradient(circle at 80% 20%, rgba(255, 102, 0, 0.15) 0%, transparent 40%);
+      text-align: center;
+      padding: 140px 8% 40px;
+      background: radial-gradient(circle at 50% 30%, rgba(255, 102, 0, 0.15) 0%, transparent 60%);
     }
 
     .hero-text {
-      max-width: 600px;
+      max-width: 800px;
     }
 
     .hero-text h1 {
-      font-size: 3.2rem;
+      font-size: 3.5rem;
       line-height: 1.2;
       margin-bottom: 20px;
     }
@@ -80,68 +82,20 @@
 
     .hero-text p {
       color: var(--text-gray);
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       line-height: 1.6;
-      margin-bottom: 30px;
-    }
-
-    /* Card de Chamada para Cadastro */
-    .cta-card {
-      background: var(--card-bg);
-      border: 1px solid rgba(255, 102, 0, 0.3);
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      text-align: center;
-      max-width: 380px;
-      width: 100%;
-      transition: transform 0.3s ease, border-color 0.3s ease;
-      cursor: pointer;
-    }
-
-    .cta-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--primary-orange);
-    }
-
-    .cta-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-
-    .cta-card p {
-      color: var(--text-gray);
-      font-size: 0.95rem;
-      margin-bottom: 20px;
-    }
-
-    .btn-orange {
-      background-color: var(--primary-orange);
-      color: #fff;
-      border: none;
-      padding: 14px 28px;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 100%;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .btn-orange:hover {
-      background-color: var(--hover-orange);
     }
 
     /* Seção "Como Funciona" */
     .how-it-works {
-      padding: 80px 8%;
+      padding: 60px 8%;
       background-color: var(--bg-dark);
       text-align: center;
     }
 
     .section-title {
       font-size: 2.2rem;
-      margin-bottom: 50px;
+      margin-bottom: 40px;
     }
 
     .section-title span {
@@ -152,6 +106,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 30px;
+      margin-bottom: 40px;
     }
 
     .step-card {
@@ -180,6 +135,60 @@
       line-height: 1.5;
     }
 
+    /* Seção Final - Bloco de Cadastro */
+    .cta-section {
+      padding: 60px 8% 100px;
+      display: flex;
+      justify-content: center;
+      background-color: var(--bg-dark);
+    }
+
+    .cta-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 102, 0, 0.4);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-orange);
+    }
+
+    .cta-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .cta-card p {
+      color: var(--text-gray);
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+
+    .btn-orange {
+      background-color: var(--primary-orange);
+      color: #fff;
+      border: none;
+      padding: 16px 32px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-orange:hover {
+      background-color: var(--hover-orange);
+    }
+
     /* MODAL FLUTUANTE DE CADASTRO */
     .modal-overlay {
       position: fixed;
@@ -187,7 +196,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(5px);
       display: flex;
       justify-content: center;
@@ -282,13 +291,7 @@
       margin: 40px auto 0;
     }
 
-    /* Responsividade */
-    @media (max-width: 900px) {
-      .hero {
-        flex-direction: column;
-        text-align: center;
-        gap: 40px;
-      }
+    @media (max-width: 768px) {
       .hero-text h1 {
         font-size: 2.5rem;
       }
@@ -306,12 +309,6 @@
       <div class="hero-text">
         <h1>TRANSFORME SEU CORPO E SUA <span>MENTE</span></h1>
         <p>A melhor estrutura de treinos, equipamentos de ponta e acompanhamento profissional para você atingir seus objetivos mais rápido.</p>
-      </div>
-
-      <div class="cta-card" onclick="openModal()">
-        <h3>Comece Hoje Mesmo</h3>
-        <p>Faça seu cadastro rápido e tenha acesso imediato à nossa plataforma de treinos.</p>
-        <button class="btn-orange">Cadastrar Aluno</button>
       </div>
     </section>
 
@@ -333,6 +330,14 @@
           <h4>Treine & Evolua</h4>
           <p>Acompanhe sua evolução diariamente com o suporte do nosso time.</p>
         </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-card" onclick="openModal()">
+        <h3>Pronto para começar?</h3>
+        <p>Faça seu cadastro rápido e acesse agora mesmo a nossa área de membros.</p>
+        <button class="btn-orange">Cadastrar Aluno</button>
       </div>
     </section>
   </div>
@@ -381,25 +386,22 @@
       document.getElementById('modalOverlay').classList.remove('active');
     }
 
-    // Fecha o modal se clicar fora do conteúdo
+    // Fecha o modal ao clicar fora
     document.getElementById('modalOverlay').addEventListener('click', function(e) {
       if (e.target === this) {
         closeModal();
       }
     });
 
-    // Função que processa o cadastro e altera a tela
+    // Processa o cadastro e troca para a tela principal
     function handleRegister(event) {
-      event.preventDefault(); // Impede o recarregamento da página
+      event.preventDefault();
       
       const nameInput = document.getElementById('nome').value;
       document.getElementById('userNameDisplay').innerText = nameInput;
 
-      // Oculta a landing page e fecha o modal
       closeModal();
       document.getElementById('landing-page').style.display = 'none';
-
-      // Exibe a tela principal
       document.getElementById('main-screen').style.display = 'block';
     }
   </script>
