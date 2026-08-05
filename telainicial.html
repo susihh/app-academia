@@ -21,7 +21,6 @@
       background-color: #000000;
       color: #ffffff;
       overflow-x: hidden;
-      /* Removido o padding-bottom global para não criar barra preta no final da landing page */
     }
 
     :root {
@@ -173,9 +172,9 @@
       line-height: 1.5;
     }
 
-    /* Seção do Cadastro ajustada sem a barra sobrando embaixo */
+    /* Seção do Cadastro com Botão Pulsante (Ajustado o padding inferior) */
     .cta-section {
-      padding: 40px 8% 60px;
+      padding: 60px 8% 60px;
       display: flex;
       justify-content: center;
       background-color: var(--bg-dark);
@@ -531,4 +530,600 @@
     .weight-input-box input {
       flex: 1;
       padding: 12px;
-      border-radius:
+      border-radius: 8px;
+      border: 1px solid rgba(255, 102, 0, 0.5);
+      background-color: #000;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .weight-input-box button {
+      background-color: var(--primary-orange);
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .weight-input-box button:hover {
+      opacity: 0.9;
+    }
+
+    .weight-history {
+      margin-top: 15px;
+      font-size: 0.85rem;
+      color: var(--text-gray);
+      text-align: center;
+    }
+
+    /* Exercício Select */
+    .exercise-select-group label {
+      display: block;
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .exercise-select-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 102, 0, 0.5);
+      background-color: #000;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .exercise-details {
+      margin-top: 18px;
+      padding: 15px;
+      background-color: #050505;
+      border-left: 3px solid var(--primary-orange);
+      border-radius: 4px;
+      font-size: 0.95rem;
+      color: #ddd;
+    }
+
+    /* Plano Nutricional na Aba Nutrição */
+    .nutrition-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .nutrition-list {
+      list-style: none;
+      margin-top: 15px;
+    }
+
+    .nutrition-list li {
+      padding: 16px 0;
+      border-bottom: 1px solid #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+    }
+
+    .nutrition-list li:last-child {
+      border-bottom: none;
+    }
+
+    .meal-title {
+      color: var(--primary-orange);
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .meal-desc {
+      color: var(--text-gray);
+      text-align: right;
+    }
+
+    /* Menu de Navegação Inferior (Exibido apenas na Área do Aluno) */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(5, 5, 5, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 102, 0, 0.3);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0 8px;
+      z-index: 999;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-gray);
+      text-decoration: none;
+      font-size: 0.75rem;
+      transition: color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .nav-item svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+      margin-bottom: 4px;
+    }
+
+    .nav-item.active, .nav-item:hover {
+      color: var(--primary-orange);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="landing-page">
+    <header>
+      <div class="logo">POWER<span>FIT</span></div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1>TRANSFORME SEU CORPO E SUA <span>MENTE</span></h1>
+        <p>A melhor estrutura de treinos, equipamentos de ponta e acompanhamento profissional para você atingir seus objetivos mais rápido.</p>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <h2 class="section-title reveal">COMO <span>FUNCIONA</span></h2>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-number">01</div>
+          <h4>Faça o Cadastro</h4>
+          <p>Preencha seus dados em nosso formulário simples em menos de 1 minuto.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">02</div>
+          <h4>Escolha o Treino</h4>
+          <p>Acesse a plataforma principal e escolha a rotina ideal para seu nível.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">03</div>
+          <h4>Treine & Evolua</h4>
+          <p>Acompanhe sua evolução diariamente com o suporte do nosso time.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section reveal">
+      <div class="cta-card" onclick="openModal()">
+        <h3>Pronto para começar?</h3>
+        <p>Faça seu cadastro rápido e acesse agora mesmo a nossa área de membros.</p>
+        <button class="btn-orange">Cadastrar Aluno</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <h2>CADASTRO DE <span>ALUNO</span></h2>
+      <form id="cadForm" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label for="nome">Nome Completo</label>
+          <input type="text" id="nome" placeholder="Digite seu nome" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
+        </div>
+        <div class="form-group">
+          <label for="pesoInicialInput">Peso Inicial (kg)</label>
+          <input type="number" step="0.1" id="pesoInicialInput" placeholder="Ex: 75.0" required>
+        </div>
+        <div class="form-group">
+          <label for="tipoTreinoInput">Objetivo Principal</label>
+          <select id="tipoTreinoInput">
+            <option value="Hipertrofia (Ganho de Massa)">Hipertrofia (Ganho de Massa)</option>
+            <option value="Emagrecimento & Definição">Emagrecimento & Definição</option>
+            <option value="Resistência & Cardiorrespiratório">Resistência & Cardiorrespiratório</option>
+            <option value="Força & Powerlifting">Força & Powerlifting</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="Crie uma senha" required minlength="6">
+        </div>
+        <button type="submit" class="btn-orange" style="animation: none;">Concluir Cadastro</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="main-screen">
+    <header>
+      <div class="logo">POWER<span>FIT</span></div>
+      <div style="font-weight: 600; color: var(--primary-orange);">Área do Aluno</div>
+    </header>
+    
+    <div class="dashboard-header">
+      <h2 style="font-size: 2rem;">Bem-vindo(a), <span id="userNameDisplay" style="color: var(--primary-orange);">Aluno</span>!</h2>
+    </div>
+
+    <div id="tab-dashboard" class="tab-page active">
+      <div class="dashboard-grid">
+        
+        <div class="dash-card">
+          <h3><span>📊</span> Frequência Semanal</h3>
+          <div class="freq-box">
+            <div class="freq-number" id="freqDisplay">0%</div>
+            
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="freqBar"></div>
+            </div>
+
+            <p class="freq-info" id="freqInfoText">Marque os dias em que compareceu à academia nesta semana:</p>
+
+            <div class="week-days-grid">
+              <button class="day-btn" onclick="toggleDay(0, this)">
+                <span class="day-name">SEG</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(1, this)">
+                <span class="day-name">TER</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(2, this)">
+                <span class="day-name">QUA</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(3, this)">
+                <span class="day-name">QUI</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(4, this)">
+                <span class="day-name">SEX</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(5, this)">
+                <span class="day-name">SÁB</span>
+                <span class="check-icon">✓</span>
+              </button>
+              <button class="day-btn" onclick="toggleDay(6, this)">
+                <span class="day-name">DOM</span>
+                <span class="check-icon">✓</span>
+              </button>
+            </div>
+
+            <button class="reset-week-btn" onclick="resetWeekManually()">Resetar Semana</button>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <h3><span>⚖️</span> Peso Atual & Avaliação</h3>
+          <p style="color: var(--text-gray); font-size: 0.9rem;">Seu peso registrado no sistema:</p>
+          
+          <div class="weight-display" id="weightDisplay">75.0 <span>kg</span></div>
+
+          <div class="weight-input-box">
+            <input type="number" step="0.1" id="newWeightInput" placeholder="Novo peso da avaliação (kg)">
+            <button onclick="updateMonthlyWeight()">Atualizar</button>
+          </div>
+
+          <div class="weight-history" id="weightHistoryText">
+            Nenhuma avaliação mensal registrada ainda.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="tab-treinos" class="tab-page">
+      <div class="dashboard-grid">
+        
+        <div class="dash-card">
+          <h3><span>🏋️‍♂️</span> Mudar Tipo de Exercício</h3>
+          <div class="exercise-select-group">
+            <label for="workoutSelect">Selecione sua modalidade:</label>
+            <select id="workoutSelect" onchange="updateWorkoutAndNutrition(this.value)">
+              <option value="Hipertrofia (Ganho de Massa)">Hipertrofia (Ganho de Massa)</option>
+              <option value="Emagrecimento & Definição">Emagrecimento & Definição</option>
+              <option value="Resistência & Cardiorrespiratório">Resistência & Cardiorrespiratório</option>
+              <option value="Força & Powerlifting">Força & Powerlifting</option>
+            </select>
+          </div>
+
+          <div class="exercise-details" id="workoutDetails">
+            Carregando resumo do treino...
+          </div>
+        </div>
+
+        <div class="dash-card" style="grid-column: span 1 / -1;">
+          <h3><span>💪</span> Rotina Semanal Recomendada</h3>
+          <p style="color: var(--text-gray); margin-bottom: 15px;">Acompanhe sua série detalhada conforme seu objetivo escolhido:</p>
+          <div class="exercise-details" id="fullWorkoutView">
+            Carregando rotina completa...
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="tab-nutricao" class="tab-page">
+      <div class="nutrition-container">
+        <div class="dash-card">
+          <h3><span>🥗</span> Plano Nutricional Aconselhado</h3>
+          <p style="color: var(--text-gray); font-size: 0.95rem;">Sua dieta é atualizada automaticamente de acordo com o tipo de exercício que você seleciona:</p>
+          
+          <ul class="nutrition-list" id="nutritionList">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-perfil" class="tab-page">
+      <div class="dashboard-grid">
+        <div class="dash-card" style="grid-column: span 1 / -1;">
+          <h3><span>👤</span> Seus Dados Cadastrais</h3>
+          <p style="margin-bottom: 10px;"><strong>Nome:</strong> <span id="profileName">Aluno</span></p>
+          <p style="margin-bottom: 10px;"><strong>Peso Atual:</strong> <span id="profileWeight">75.0 kg</span></p>
+          <p style="margin-bottom: 10px;"><strong>Status da Matrícula:</strong> <span style="color: #00ff66;">Ativa</span></p>
+          <p style="margin-bottom: 25px;"><strong>Plano:</strong> PowerFit VIP</p>
+          <button class="btn-orange" style="max-width: 200px; animation: none;" onclick="location.reload()">Sair da Conta</button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="switchTab('dashboard', this)">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Início</span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('treinos', this)">
+        <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 6.29 3.43 4.86 2 3.43 3.43 2 4.86 3.43 6.29 2 7.71 3.43 9.14 2 10.57 3.43 12 7 20.57 15.57 17 12 20.57 13.43 22z"/></svg>
+        <span>Treinos</span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('nutricao', this)">
+        <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.46 3.9 3.45 4.38L6.45 22h2.1l0-8.62C10.54 12.9 12 11.12 12 9V2h-1v7zm7-7c-2.21 0-4 1.79-4 4v5c0 1.66 1.34 3 3 3v7h2V2h-1z"/></svg>
+        <span>Nutrição</span>
+      </button>
+
+      <button class="nav-item" onclick="switchTab('perfil', this)">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <span>Perfil</span>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    let weekState = [false, false, false, false, false, false, false];
+    let currentWeight = 70.0;
+    let initialWeight = 70.0;
+
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('active');
+      document.getElementById('nome').focus();
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function handleRegister(event) {
+      event.preventDefault();
+      const nameInput = document.getElementById('nome').value.trim();
+      const weightInput = parseFloat(document.getElementById('pesoInicialInput').value);
+      const selectedGoal = document.getElementById('tipoTreinoInput').value;
+      
+      if (nameInput) {
+        document.getElementById('userNameDisplay').innerText = nameInput;
+        document.getElementById('profileName').innerText = nameInput;
+        document.getElementById('workoutSelect').value = selectedGoal;
+        
+        if (!isNaN(weightInput) && weightInput > 0) {
+          currentWeight = weightInput;
+          initialWeight = weightInput;
+          renderWeight();
+        }
+
+        updateWorkoutAndNutrition(selectedGoal);
+        checkWeeklyReset();
+        closeModal();
+        
+        document.getElementById('landing-page').style.display = 'none';
+        document.getElementById('main-screen').style.display = 'block';
+        document.body.style.paddingBottom = '80px';
+        window.scrollTo(0, 0);
+      }
+    }
+
+    // Atualização de Peso na Avaliação Mensal
+    function updateMonthlyWeight() {
+      const input = document.getElementById('newWeightInput');
+      const newWeightVal = parseFloat(input.value);
+
+      if (!isNaN(newWeightVal) && newWeightVal > 0) {
+        const diff = (newWeightVal - currentWeight).toFixed(1);
+        currentWeight = newWeightVal;
+        renderWeight();
+
+        let diffMessage = "";
+        if (diff > 0) {
+          diffMessage = ` (Aumento de +${diff} kg em relação à avaliação anterior)`;
+        } else if (diff < 0) {
+          diffMessage = ` (Redução de ${diff} kg em relação à avaliação anterior)`;
+        } else {
+          diffMessage = ` (Sem alteração no peso)`;
+        }
+
+        const today = new Date().toLocaleDateString('pt-BR');
+        document.getElementById('weightHistoryText').innerHTML = 
+          `Última avaliação em <strong>${today}</strong>${diffMessage}.`;
+          
+        input.value = "";
+      } else {
+        alert("Por favor, informe um peso válido!");
+      }
+    }
+
+    function renderWeight() {
+      document.getElementById('weightDisplay').innerHTML = `${currentWeight.toFixed(1)} <span>kg</span>`;
+      document.getElementById('profileWeight').innerText = `${currentWeight.toFixed(1)} kg`;
+    }
+
+    // Frequência
+    function toggleDay(index, btnElement) {
+      weekState[index] = !weekState[index];
+      
+      if (weekState[index]) {
+        btnElement.classList.add('active');
+      } else {
+        btnElement.classList.remove('active');
+      }
+
+      calculateFrequency();
+    }
+
+    function calculateFrequency() {
+      const activeDaysCount = weekState.filter(day => day === true).length;
+      const percentage = Math.round((activeDaysCount / 7) * 100);
+
+      document.getElementById('freqDisplay').innerText = `${percentage}%`;
+      document.getElementById('freqBar').style.width = `${percentage}%`;
+
+      document.getElementById('freqInfoText').innerHTML = activeDaysCount > 0 
+        ? `Você treinou <strong>${activeDaysCount} de 7 dias</strong> nesta semana.`
+        : `Marque os dias em que compareceu à academia nesta semana:`;
+    }
+
+    function resetWeekManually() {
+      weekState = [false, false, false, false, false, false, false];
+      const buttons = document.querySelectorAll('.day-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      calculateFrequency();
+    }
+
+    function checkWeeklyReset() {
+      const now = new Date();
+      const currentWeekNumber = getWeekNumber(now);
+      const lastWeekSaved = localStorage.getItem('powerfit_last_week');
+
+      if (lastWeekSaved && parseInt(lastWeekSaved) !== currentWeekNumber) {
+        resetWeekManually();
+      }
+      localStorage.setItem('powerfit_last_week', currentWeekNumber);
+    }
+
+    function getWeekNumber(d) {
+      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+    }
+
+    const dataPlans = {
+      "Hipertrofia (Ganho de Massa)": {
+        details: "<strong>Foco:</strong> Cargas elevadas com repetições entre 8 e 12. Frequência ideal: 4 a 5x por semana.",
+        fullWorkout: "<strong>Treino A:</strong> Peito & Tríceps<br><strong>Treino B:</strong> Costas & Bíceps<br><strong>Treino C:</strong> Pernas completas & Ombros",
+        nutrition: [
+          { title: "Café da Manhã", desc: "4 ovos mexidos, aveia e banana" },
+          { title: "Almoço", desc: "Arroz integral, peito de frango e vegetais" },
+          { title: "Lanche / Pré-Treino", desc: "Batata doce e frango desfiado" },
+          { title: "Jantar", desc: "Carne magra, mandioca e salada verde" }
+        ]
+      },
+      "Emagrecimento & Definição": {
+        details: "<strong>Foco:</strong> Treinos circuitos, déficit calórico e cardio pós-treino (HIIT).",
+        fullWorkout: "<strong>Treino A:</strong> Full Body Circuito<br><strong>Treino B:</strong> Cardio HIIT 30 min<br><strong>Treino C:</strong> Musculação adaptada + Abdominais",
+        nutrition: [
+          { title: "Café da Manhã", desc: "Omelete de 3 claras + 1 ovo, mamão com chias" },
+          { title: "Almoço", desc: "Filé de peixe grelhado, brócolis e salada à vontade" },
+          { title: "Lanche / Pré-Treino", desc: "Iogurte desnatado com castanhas" },
+          { title: "Jantar", desc: "Sopa proteica de legumes com frango" }
+        ]
+      },
+      "Resistência & Cardiorrespiratório": {
+        details: "<strong>Foco:</strong> Funcional, corrida, bike e alta densidade de repetições (15-20).",
+        fullWorkout: "<strong>Treino A:</strong> Corrida contínua + Core<br><strong>Treino B:</strong> Circuito de agilidade<br><strong>Treino C:</strong> Bike indoor + Resistência muscular",
+        nutrition: [
+          { title: "Café da Manhã", desc: "Pão integral com ovos e suco de laranja" },
+          { title: "Almoço", desc: "Macarrão integral com patinho moído e salada" },
+          { title: "Lanche / Pré-Treino", desc: "Banana com pasta de amendoim" },
+          { title: "Jantar", desc: "Arroz, feijão e filé de frango" }
+        ]
+      },
+      "Força & Powerlifting": {
+        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Levantamento Terra) com baixas repetições (1 a 5) e descanso longo.",
+        fullWorkout: "<strong>Treino A:</strong> Agachamento Livre & Acessórios<br><strong>Treino B:</strong> Supino Reto & Tríceps<br><strong>Treino C:</strong> Levantamento Terra & Costas",
+        nutrition: [
+          { title: "Café da Manhã", desc: "Ovos mexidos, pão integral com pasta de amendoim e café" },
+          { title: "Almoço", desc: "Arroz, feijão, bife de alcatra e vegetais" },
+          { title: "Lanche / Pré-Treino", desc: "Vitamina de banana, aveia e whey protein" },
+          { title: "Jantar", desc: "Mandioca cozida, sobrecoxa de frango e salada" }
+        ]
+      }
+    };
+
+    function updateWorkoutAndNutrition(goal) {
+      const data = dataPlans[goal];
+      if (!data) return;
+
+      document.getElementById('workoutDetails').innerHTML = data.details;
+      document.getElementById('fullWorkoutView').innerHTML = data.fullWorkout;
+
+      const nutritionList = document.getElementById('nutritionList');
+      nutritionList.innerHTML = '';
+
+      data.nutrition.forEach(meal => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span class="meal-title">${meal.title}</span>
+          <span class="meal-desc">${meal.desc}</span>
+        `;
+        nutritionList.appendChild(li);
+      });
+    }
+
+    function switchTab(tabName, btnElement) {
+      const tabs = document.querySelectorAll('.tab-page');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => item.classList.remove('active'));
+
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+      btnElement.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // Scroll Reveal Animation
+    window.addEventListener('scroll', () => {
+      const reveals = document.querySelectorAll('.reveal');
+      reveals.forEach(reveal => {
+        const windowHeight = window.innerHeight;
+        const revealTop = reveal.getBoundingClientRect().top;
+        if (revealTop < windowHeight - 100) {
+          reveal.classList.add('active');
+        }
+      });
+    });
+
+    window.dispatchEvent(new Event('scroll'));
+  </script>
+</body>
+</html>
