@@ -60,7 +60,7 @@
       border-bottom: 1px solid rgba(255, 102, 0, 0.3);
     }
 
-    /* Contêiner do cabeçalho que garante a mesma posição em todas as páginas */
+    /* Contêiner do cabeçalho */
     .header-container {
       max-width: 1100px;
       margin: 0 auto;
@@ -247,7 +247,7 @@
       transform: scale(1.02);
     }
 
-    /* Animações de Entrada (Scroll Reveal) */
+    /* Animações de Entrada */
     .reveal {
       opacity: 0;
       transform: translateY(40px);
@@ -368,7 +368,7 @@
     #main-screen {
       display: none;
       min-height: 100vh;
-      padding: 110px 0 100px;
+      padding: 110px 0 65px; /* Ajustado para limitar o espaço exatamente na barra inferior */
       animation: fadeInUp 0.6s ease forwards;
     }
 
@@ -422,7 +422,7 @@
       color: var(--primary-orange);
     }
 
-    /* Estilos do Bloco de Frequência */
+    /* Bloco de Frequência */
     .freq-box {
       text-align: center;
       padding: 10px 0;
@@ -520,7 +520,7 @@
       margin-bottom: 15px;
     }
 
-    /* Estilos do Bloco de Peso Atual / Avaliação Mensal */
+    /* Bloco de Peso */
     .weight-display {
       font-size: 3rem;
       font-weight: 800;
@@ -601,9 +601,10 @@
       border-radius: 4px;
       font-size: 0.95rem;
       color: #ddd;
+      line-height: 1.6;
     }
 
-    /* Plano Nutricional na Aba Nutrição */
+    /* Plano Nutricional */
     .nutrition-container {
       max-width: 800px;
       margin: 0 auto;
@@ -644,12 +645,14 @@
       bottom: 0;
       left: 0;
       width: 100%;
+      height: 65px;
       background-color: rgba(5, 5, 5, 0.95);
       backdrop-filter: blur(12px);
       border-top: 1px solid rgba(255, 102, 0, 0.3);
       display: flex;
       justify-content: space-around;
-      padding: 12px 0 8px;
+      align-items: center;
+      padding: 6px 0;
       z-index: 999;
     }
 
@@ -696,19 +699,19 @@
     </section>
 
     <section class="how-it-works">
-      <h2 class="section-title reveal">COMO <span>FUNCIONA</span></h2>
+      <h2 class="section-title reveal active">COMO <span>FUNCIONA</span></h2>
       <div class="steps-grid">
-        <div class="step-card reveal">
+        <div class="step-card reveal active">
           <div class="step-number">01</div>
           <h4>Faça o Cadastro</h4>
           <p>Preencha seus dados em nosso formulário simples em menos de 1 minuto.</p>
         </div>
-        <div class="step-card reveal">
+        <div class="step-card reveal active">
           <div class="step-number">02</div>
           <h4>Escolha o Treino</h4>
           <p>Acesse a plataforma principal e escolha a rotina ideal para seu nível.</p>
         </div>
-        <div class="step-card reveal">
+        <div class="step-card reveal active">
           <div class="step-number">03</div>
           <h4>Treine & Evolua</h4>
           <p>Acompanhe sua evolução diariamente com o suporte do nosso time.</p>
@@ -716,7 +719,7 @@
       </div>
     </section>
 
-    <section class="cta-section reveal">
+    <section class="cta-section reveal active">
       <div class="cta-card" onclick="openModal()">
         <h3>Pronto para começar?</h3>
         <p>Faça seu cadastro rápido e acesse agora mesmo a nossa área de membros.</p>
@@ -921,8 +924,8 @@
 
   <script>
     let weekState = [false, false, false, false, false, false, false];
-    let currentWeight = 70.0;
-    let initialWeight = 70.0;
+    let currentWeight = 75.0;
+    let initialWeight = 75.0;
 
     function openModal() {
       document.getElementById('modalOverlay').classList.add('active');
@@ -964,7 +967,7 @@
         
         document.getElementById('landing-page').style.display = 'none';
         document.getElementById('main-screen').style.display = 'block';
-        document.body.style.paddingBottom = '80px';
+        document.body.style.paddingBottom = '65px'; /* Ajustado de 80px para 65px */
         window.scrollTo(0, 0);
       }
     }
@@ -1076,73 +1079,50 @@
         details: "<strong>Foco:</strong> Funcional, corrida, bike e alta densidade de repetições (15-20).",
         fullWorkout: "<strong>Treino A:</strong> Corrida contínua + Core<br><strong>Treino B:</strong> Circuito de agilidade<br><strong>Treino C:</strong> Bike indoor + Resistência muscular",
         nutrition: [
-          { title: "Café da Manhã", desc: "Pão integral com ovos e suco de laranja" },
+          { title: "Café da Manhã", desc: "Pão integral com ovos, suco natural e fruta" },
           { title: "Almoço", desc: "Macarrão integral com patinho moído e salada" },
-          { title: "Lanche / Pré-Treino", desc: "Banana com pasta de amendoim" },
-          { title: "Jantar", desc: "Arroz, feijão e filé de frango" }
+          { title: "Lanche / Pré-Treino", desc: "Torradas integrais com pasta de amendoim" },
+          { title: "Jantar", desc: "Peixe grelhado com purê de batata baroa" }
         ]
       },
       "Força & Powerlifting": {
-        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Levantamento Terra) com poucas repetições (1-5) e descansos longos.",
-        fullWorkout: "<strong>Dia 1:</strong> Agachamento pesado + auxiliares<br><strong>Dia 2:</strong> Supino + acessórios de empurrar<br><strong>Dia 3:</strong> Levantamento Terra + acessórios de puxar",
+        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Terra) com cargas máximas e poucas repetições (3-5).",
+        fullWorkout: "<strong>Treino A:</strong> Agachamento Livre + Auxiliares<br><strong>Treino B:</strong> Supino Reto pesado + Tríceps<br><strong>Treino C:</strong> Levantamento Terra + Dorsais",
         nutrition: [
-          { title: "Café da Manhã", desc: "Ovos, pão com manteiga e abacate" },
-          { title: "Almoço", desc: "Arroz, feijão, bife de carne vermelha e salada" },
-          { title: "Lanche / Pré-Treino", desc: "Vitamina de banana com leite, aveia e pasta de amendoim" },
-          { title: "Jantar", desc: "Mandioca ou batata com proteína e vegetais" }
+          { title: "Café da Manhã", desc: "Ovos, pão com queijo, abacate e café" },
+          { title: "Almoço", desc: "Arroz, feijão, bife de alcatra e legumes assados" },
+          { title: "Lanche / Pré-Treino", desc: "Vitamina de banana com leite, aveia e hipercalórico" },
+          { title: "Jantar", desc: "Arroz, peito de frango, ovos e salada" }
         ]
       }
     };
 
-    function updateWorkoutAndNutrition(goal) {
-      const plan = dataPlans[goal] || dataPlans["Hipertrofia (Ganho de Massa)"];
+    function updateWorkoutAndNutrition(goalKey) {
+      const plan = dataPlans[goalKey];
+      if (!plan) return;
 
       document.getElementById('workoutDetails').innerHTML = plan.details;
       document.getElementById('fullWorkoutView').innerHTML = plan.fullWorkout;
 
-      const nutritionListEl = document.getElementById('nutritionList');
-      nutritionListEl.innerHTML = "";
-
+      const listElement = document.getElementById('nutritionList');
+      listElement.innerHTML = "";
       plan.nutrition.forEach(meal => {
         const li = document.createElement('li');
         li.innerHTML = `<span class="meal-title">${meal.title}</span><span class="meal-desc">${meal.desc}</span>`;
-        nutritionListEl.appendChild(li);
+        listElement.appendChild(li);
       });
     }
 
-    function switchTab(tabName, navBtn) {
+    function switchTab(tabId, navBtn) {
       const pages = document.querySelectorAll('.tab-page');
-      pages.forEach(page => page.classList.remove('active'));
+      pages.forEach(p => p.classList.remove('active'));
 
       const navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(item => item.classList.remove('active'));
 
-      const targetTab = document.getElementById(`tab-${tabName}`);
-      if (targetTab) {
-        targetTab.classList.add('active');
-      }
-
-      if (navBtn) {
-        navBtn.classList.add('active');
-      }
-
-      window.scrollTo(0, 0);
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+      navBtn.classList.add('active');
     }
-
-    const revealElements = document.querySelectorAll('.reveal');
-    function revealOnScroll() {
-      const windowHeight = window.innerHeight;
-      revealElements.forEach(el => {
-        const elementTop = el.getBoundingClientRect().top;
-        if (elementTop < windowHeight - 80) {
-          el.classList.add('active');
-        }
-      });
-    }
-
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll();
   </script>
-
 </body>
 </html>
