@@ -48,7 +48,7 @@
       }
     }
 
-    /* Cabeçalho */
+    /* Cabeçalho Base */
     header {
       display: flex;
       justify-content: space-between;
@@ -61,6 +61,12 @@
       top: 0;
       z-index: 100;
       border-bottom: 1px solid rgba(255, 102, 0, 0.3);
+    }
+
+    /* Cabeçalho Centralizado da Área do Aluno */
+    .header-centralizado {
+      justify-content: center !important;
+      gap: 25px;
     }
 
     .logo {
@@ -172,7 +178,7 @@
       line-height: 1.5;
     }
 
-    /* Seção do Cadastro com Botão Pulsante (Ajustado o padding inferior) */
+    /* Seção do Cadastro com Botão Pulsante */
     .cta-section {
       padding: 60px 8% 60px;
       display: flex;
@@ -625,7 +631,7 @@
       text-align: right;
     }
 
-    /* Menu de Navegação Inferior (Exibido apenas na Área do Aluno) */
+    /* Menu de Navegação Inferior */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -746,7 +752,7 @@
   </div>
 
   <div id="main-screen">
-    <header>
+    <header class="header-centralizado">
       <div class="logo">POWER<span>FIT</span></div>
       <div style="font-weight: 600; color: var(--primary-orange);">Área do Aluno</div>
     </header>
@@ -952,7 +958,6 @@
       }
     }
 
-    // Atualização de Peso na Avaliação Mensal
     function updateMonthlyWeight() {
       const input = document.getElementById('newWeightInput');
       const newWeightVal = parseFloat(input.value);
@@ -986,7 +991,6 @@
       document.getElementById('profileWeight').innerText = `${currentWeight.toFixed(1)} kg`;
     }
 
-    // Frequência
     function toggleDay(index, btnElement) {
       weekState[index] = !weekState[index];
       
@@ -1068,62 +1072,66 @@
         ]
       },
       "Força & Powerlifting": {
-        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Levantamento Terra) com baixas repetições (1 a 5) e descanso longo.",
-        fullWorkout: "<strong>Treino A:</strong> Agachamento Livre & Acessórios<br><strong>Treino B:</strong> Supino Reto & Tríceps<br><strong>Treino C:</strong> Levantamento Terra & Costas",
+        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Levantamento Terra) com poucas repetições (1-5) e descansos longos.",
+        fullWorkout: "<strong>Dia 1:</strong> Agachamento pesado + auxiliares<br><strong>Dia 2:</strong> Supino + acessórios de empurrar<br><strong>Dia 3:</strong> Levantamento Terra + acessórios de puxar",
         nutrition: [
-          { title: "Café da Manhã", desc: "Ovos mexidos, pão integral com pasta de amendoim e café" },
-          { title: "Almoço", desc: "Arroz, feijão, bife de alcatra e vegetais" },
-          { title: "Lanche / Pré-Treino", desc: "Vitamina de banana, aveia e whey protein" },
-          { title: "Jantar", desc: "Mandioca cozida, sobrecoxa de frango e salada" }
+          { title: "Café da Manhã", desc: "Ovos, pão com manteiga e abacate" },
+          { title: "Almoço", desc: "Arroz, feijão, bife de carne vermelha e salada" },
+          { title: "Lanche / Pré-Treino", desc: "Vitamina de banana com leite, aveia e pasta de amendoim" },
+          { title: "Jantar", desc: "Mandioca ou batata com proteína e vegetais" }
         ]
       }
     };
 
     function updateWorkoutAndNutrition(goal) {
-      const data = dataPlans[goal];
-      if (!data) return;
+      const plan = dataPlans[goal] || dataPlans["Hipertrofia (Ganho de Massa)"];
 
-      document.getElementById('workoutDetails').innerHTML = data.details;
-      document.getElementById('fullWorkoutView').innerHTML = data.fullWorkout;
+      document.getElementById('workoutDetails').innerHTML = plan.details;
+      document.getElementById('fullWorkoutView').innerHTML = plan.fullWorkout;
 
-      const nutritionList = document.getElementById('nutritionList');
-      nutritionList.innerHTML = '';
+      const nutritionListEl = document.getElementById('nutritionList');
+      nutritionListEl.innerHTML = "";
 
-      data.nutrition.forEach(meal => {
+      plan.nutrition.forEach(meal => {
         const li = document.createElement('li');
-        li.innerHTML = `
-          <span class="meal-title">${meal.title}</span>
-          <span class="meal-desc">${meal.desc}</span>
-        `;
-        nutritionList.appendChild(li);
+        li.innerHTML = `<span class="meal-title">${meal.title}</span><span class="meal-desc">${meal.desc}</span>`;
+        nutritionListEl.appendChild(li);
       });
     }
 
-    function switchTab(tabName, btnElement) {
-      const tabs = document.querySelectorAll('.tab-page');
-      tabs.forEach(tab => tab.classList.remove('active'));
+    function switchTab(tabName, navBtn) {
+      const pages = document.querySelectorAll('.tab-page');
+      pages.forEach(page => page.classList.remove('active'));
 
       const navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(item => item.classList.remove('active'));
 
-      document.getElementById(`tab-${tabName}`).classList.add('active');
-      btnElement.classList.add('active');
+      const targetTab = document.getElementById(`tab-${tabName}`);
+      if (targetTab) {
+        targetTab.classList.add('active');
+      }
+
+      if (navBtn) {
+        navBtn.classList.add('active');
+      }
+
       window.scrollTo(0, 0);
     }
 
-    // Scroll Reveal Animation
-    window.addEventListener('scroll', () => {
-      const reveals = document.querySelectorAll('.reveal');
-      reveals.forEach(reveal => {
-        const windowHeight = window.innerHeight;
-        const revealTop = reveal.getBoundingClientRect().top;
-        if (revealTop < windowHeight - 100) {
-          reveal.classList.add('active');
+    const revealElements = document.querySelectorAll('.reveal');
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      revealElements.forEach(el => {
+        const elementTop = el.getBoundingClientRect().top;
+        if (elementTop < windowHeight - 80) {
+          el.classList.add('active');
         }
       });
-    });
+    }
 
-    window.dispatchEvent(new Event('scroll'));
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
   </script>
+
 </body>
 </html>
