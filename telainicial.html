@@ -76,15 +76,15 @@
       color: var(--primary-orange);
     }
 
-    /* Hero Section Animado */
+    /* Hero Section Animado - Ajustado para alinhar melhor no nível da tela */
     .hero {
-      min-height: 75vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 140px 8% 40px;
+      padding: 180px 8% 80px;
       background: radial-gradient(circle at 50% 50%, rgba(255, 102, 0, 0.55) 0%, rgba(255, 102, 0, 0.2) 40%, transparent 75%);
       background-size: 200% 200%;
       animation: pulseGlow 6s ease-in-out infinite;
@@ -860,7 +860,7 @@
           <p style="color: var(--text-gray); font-size: 0.95rem;">Sua dieta é atualizada automaticamente de acordo com o tipo de exercício que você seleciona:</p>
           
           <ul class="nutrition-list" id="nutritionList">
-            </ul>
+          </ul>
         </div>
       </div>
     </div>
@@ -1066,66 +1066,62 @@
         ]
       },
       "Força & Powerlifting": {
-        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Terra) com carga máxima.",
-        fullWorkout: "<strong>Treino A:</strong> Supino Reto + Auxiliares<br><strong>Treino B:</strong> Agachamento Livre + Pernas<br><strong>Treino C:</strong> Levantamento Terra + Dorsal",
+        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Levantamento Terra) com baixas repetições (1 a 5) e descanso longo.",
+        fullWorkout: "<strong>Treino A:</strong> Agachamento Livre & Acessórios<br><strong>Treino B:</strong> Supino Reto & Tríceps<br><strong>Treino C:</strong> Levantamento Terra & Costas",
         nutrition: [
-          { title: "Café da Manhã", desc: "Panqueca de banana, ovos, aveia e mel" },
-          { title: "Almoço", desc: "Carne vermelha magra, arroz, feijão e salada" },
-          { title: "Lanche / Pré-Treino", desc: "Vitamina de leite, Whey e banana" },
-          { title: "Jantar", desc: "Ovos cozidos, batata inglesa e frango" }
+          { title: "Café da Manhã", desc: "Ovos mexidos, pão integral com pasta de amendoim e café" },
+          { title: "Almoço", desc: "Arroz, feijão, bife de alcatra e vegetais" },
+          { title: "Lanche / Pré-Treino", desc: "Vitamina de banana, aveia e whey protein" },
+          { title: "Jantar", desc: "Mandioca cozida, sobrecoxa de frango e salada" }
         ]
       }
     };
 
     function updateWorkoutAndNutrition(goal) {
-      const plan = dataPlans[goal] || dataPlans["Hipertrofia (Ganho de Massa)"];
-      
-      document.getElementById('workoutDetails').innerHTML = plan.details;
-      document.getElementById('fullWorkoutView').innerHTML = plan.fullWorkout;
-      
-      const nutList = document.getElementById('nutritionList');
-      nutList.innerHTML = plan.nutrition.map(item => `
-        <li>
-          <span class="meal-title">${item.title}</span>
-          <span class="meal-desc">${item.desc}</span>
-        </li>
-      `).join('');
-    }
+      const data = dataPlans[goal];
+      if (!data) return;
 
-    function switchTab(tabName, btnElement) {
-      const pages = document.querySelectorAll('.tab-page');
-      pages.forEach(page => page.classList.remove('active'));
+      document.getElementById('workoutDetails').innerHTML = data.details;
+      document.getElementById('fullWorkoutView').innerHTML = data.fullWorkout;
 
-      const selectedPage = document.getElementById(`tab-${tabName}`);
-      if (selectedPage) {
-        selectedPage.classList.add('active');
-      }
+      const nutritionList = document.getElementById('nutritionList');
+      nutritionList.innerHTML = '';
 
-      const items = document.querySelectorAll('.nav-item');
-      items.forEach(item => item.classList.remove('active'));
-      if (btnElement) {
-        btnElement.classList.add('active');
-      }
-
-      window.scrollTo(0, 0);
-    }
-
-    function revealOnScroll() {
-      const reveals = document.querySelectorAll('.reveal');
-      const windowHeight = window.innerHeight;
-
-      reveals.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const revealPoint = 100;
-
-        if (elementTop < windowHeight - revealPoint) {
-          element.classList.add('active');
-        }
+      data.nutrition.forEach(meal => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span class="meal-title">${meal.title}</span>
+          <span class="meal-desc">${meal.desc}</span>
+        `;
+        nutritionList.appendChild(li);
       });
     }
 
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll();
+    function switchTab(tabName, btnElement) {
+      const tabs = document.querySelectorAll('.tab-page');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => item.classList.remove('active'));
+
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+      btnElement.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // Scroll Reveal Animation
+    window.addEventListener('scroll', () => {
+      const reveals = document.querySelectorAll('.reveal');
+      reveals.forEach(reveal => {
+        const windowHeight = window.innerHeight;
+        const revealTop = reveal.getBoundingClientRect().top;
+        if (revealTop < windowHeight - 100) {
+          reveal.classList.add('active');
+        }
+      });
+    });
+
+    window.dispatchEvent(new Event('scroll'));
   </script>
 </body>
 </html>
