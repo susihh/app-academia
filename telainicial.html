@@ -94,17 +94,27 @@
       animation: pulseGlow 6s ease-in-out infinite;
     }
 
+    /* Título Animado com o mesmo efeito do Fundo */
     .hero-text h1 {
       font-size: 3.5rem;
       line-height: 1.2;
       margin-bottom: 20px;
-      animation: fadeInDown 1s ease forwards;
-      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      
+      /* Aplica o gradiente flutuante no próprio texto */
+      background: radial-gradient(circle at 50% 50%, #ffffff 0%, var(--primary-orange) 50%, #ffffff 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      
+      /* Animação Dupla: Entrada (fadeInDown) + Movimento do Fundo (pulseGlow) */
+      animation: fadeInDown 1s ease forwards, pulseGlow 6s ease-in-out infinite;
+      text-shadow: 0 0 20px rgba(255, 102, 0, 0.2);
     }
 
     .hero-text h1 span {
-      color: var(--primary-orange);
-      text-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
+      color: inherit;
+      text-shadow: inherit;
     }
 
     .hero-text p {
@@ -365,8 +375,7 @@
     #main-screen {
       display: none;
       min-height: 100vh;
-      padding: 110px 0 65px 0; /* Padding inferior idêntico à altura da barra para o conteúdo não cobrir os ícones */
-      animation: fadeInUp 0.6s ease forwards;
+      padding: 110px 0 65px 0;
     }
 
     .dashboard-header {
@@ -636,7 +645,7 @@
       text-align: right;
     }
 
-    /* Menu de Navegação Inferior Colado no Fim da Tela */
+    /* Menu de Navegação Inferior */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -1075,49 +1084,50 @@
         details: "<strong>Foco:</strong> Funcional, corrida, bike e alta densidade de repetições (15-20).",
         fullWorkout: "<strong>Treino A:</strong> Corrida contínua + Core<br><strong>Treino B:</strong> Circuito de agilidade<br><strong>Treino C:</strong> Bike indoor + Resistência muscular",
         nutrition: [
-          { title: "Café da Manhã", desc: "Pão integral com ovos, suco natural e fruta" },
-          { title: "Almoço", desc: "Macarrão integral com patinho moído e salada" },
-          { title: "Lanche / Pré-Treino", desc: "Torradas integrais com pasta de amendoim" },
-          { title: "Jantar", desc: "Peixe grelhado com purê de batata baroa" }
+          { title: "Café da Manhã", desc: "Pão integral, queijo cotagge e suco verde" },
+          { title: "Almoço", desc: "Macarrão integral com atum e salada de folhas" },
+          { title: "Lanche / Pré-Treino", desc: "Barra de cereais proteica e fruta" },
+          { title: "Jantar", desc: "Omelete com legumes e batata cozida" }
         ]
       },
       "Força & Powerlifting": {
-        details: "<strong>Foco:</strong> Exercícios compostos (Agachamento, Supino, Terra) com cargas máximas e poucas repetições (3-5).",
-        fullWorkout: "<strong>Treino A:</strong> Agachamento Livre + Auxiliares<br><strong>Treino B:</strong> Supino Reto pesado + Tríceps<br><strong>Treino C:</strong> Levantamento Terra + Dorsais",
+        details: "<strong>Foco:</strong> Baixas repetições (1-5 reps) com cargas máximas e descanso longo entre séries.",
+        fullWorkout: "<strong>Treino A:</strong> Agachamento livre + Acessórios<br><strong>Treino B:</strong> Supino reto + Tríceps heavy<br><strong>Treino C:</strong> Levantamento Terra + Dorsal",
         nutrition: [
-          { title: "Café da Manhã", desc: "Ovos, pão com queijo, abacate e café" },
-          { title: "Almoço", desc: "Arroz, feijão, bife de alcatra e legumes assados" },
-          { title: "Lanche / Pré-Treino", desc: "Vitamina de banana com leite, aveia e hipercalórico" },
-          { title: "Jantar", desc: "Arroz, peito de frango, ovos e salada" }
+          { title: "Café da Manhã", desc: "Pão integral com pasta de amendoim e café preto" },
+          { title: "Almoço", desc: "Arroz, feijão, bife de patinho e salada" },
+          { title: "Lanche / Pré-Treino", desc: "Banana, aveia e pão com patinho moído" },
+          { title: "Jantar", desc: "Mandioca, filé de frango e ovos cozidos" }
         ]
       }
     };
 
-    function updateWorkoutAndNutrition(goalKey) {
-      const plan = dataPlans[goalKey];
+    function updateWorkoutAndNutrition(planKey) {
+      const plan = dataPlans[planKey];
       if (!plan) return;
 
       document.getElementById('workoutDetails').innerHTML = plan.details;
       document.getElementById('fullWorkoutView').innerHTML = plan.fullWorkout;
 
-      const listElement = document.getElementById('nutritionList');
-      listElement.innerHTML = "";
+      const nutritionListElem = document.getElementById('nutritionList');
+      nutritionListElem.innerHTML = '';
+      
       plan.nutrition.forEach(meal => {
         const li = document.createElement('li');
         li.innerHTML = `<span class="meal-title">${meal.title}</span><span class="meal-desc">${meal.desc}</span>`;
-        listElement.appendChild(li);
+        nutritionListElem.appendChild(li);
       });
     }
 
-    function switchTab(tabId, navBtn) {
-      const pages = document.querySelectorAll('.tab-page');
-      pages.forEach(p => p.classList.remove('active'));
+    function switchTab(tabId, navElement) {
+      const tabs = document.querySelectorAll('.tab-page');
+      tabs.forEach(tab => tab.classList.remove('active'));
 
       const navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(item => item.classList.remove('active'));
 
       document.getElementById(`tab-${tabId}`).classList.add('active');
-      navBtn.classList.add('active');
+      navElement.classList.add('active');
     }
   </script>
 </body>
