@@ -80,54 +80,53 @@
       color: var(--primary-orange);
     }
 
-    /* Hero Section Animado com Imagem Fosca */
+    /* Hero Section */
     .hero {
-      position: relative;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      padding: 180px 8% 80px;
+      padding: 140px 8% 80px;
+      background-color: #000000;
+    }
+
+    /* Card/Box exclusivo onde fica o Título com Imagem Fosca de Fundo */
+    .title-banner {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      padding: 60px 40px;
+      border-radius: 20px;
       overflow: hidden;
+      text-align: center;
+      border: 1px solid rgba(255, 102, 0, 0.4);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 102, 0, 0.2);
     }
 
-    /* Imagem de Fundo Desfocada/Fosca */
-    .hero-bg {
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      width: calc(100% + 20px);
-      height: calc(100% + 20px);
-      background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.8)), url('1.jfif');
-      background-size: cover;
-      background-position: center;
-      filter: blur(6px);
-      z-index: 1;
-    }
-
-    /* Efeito Radial de Brilho sobre a Imagem */
-    .hero-overlay {
+    /* Imagem de Fundo Desfocada/Fosca dentro do Card */
+    .title-banner::before {
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 50% 50%, rgba(255, 102, 0, 0.35) 0%, rgba(255, 102, 0, 0.1) 50%, transparent 80%);
-      background-size: 200% 200%;
-      animation: pulseGlow 6s ease-in-out infinite;
-      z-index: 2;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85)), url('1.jfif');
+      background-size: cover;
+      background-position: center;
+      filter: blur(5px);
+      transform: scale(1.05); /* Evita bordas brancas pelo blur */
+      z-index: 1;
     }
 
     .hero-text {
       position: relative;
-      z-index: 3;
+      z-index: 2;
     }
 
-    /* Título Animado com o mesmo efeito do Fundo */
+    /* Título Animado */
     .hero-text h1 {
-      font-size: 3.5rem;
+      font-size: 3.2rem;
       line-height: 1.2;
       margin-bottom: 20px;
       
@@ -153,7 +152,7 @@
       margin: 0 auto;
       animation: fadeInUp 1s ease 0.3s forwards;
       opacity: 0;
-      text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     /* Seção Como Funciona */
@@ -727,11 +726,11 @@
     </header>
 
     <section class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-overlay"></div>
-      <div class="hero-text">
-        <h1>TRANSFORME SEU CORPO E SUA <span>MENTE</span></h1>
-        <p>A melhor estrutura de treinos, equipamentos de ponta e acompanhamento profissional para você atingir seus objetivos mais rápido.</p>
+      <div class="title-banner">
+        <div class="hero-text">
+          <h1>TRANSFORME SEU CORPO E SUA <span>MENTE</span></h1>
+          <p>A melhor estrutura de treinos, equipamentos de ponta e acompanhamento profissional para você atingir seus objetivos mais rápido.</p>
+        </div>
       </div>
     </section>
 
