@@ -29,7 +29,7 @@
       --error-red: #ff4d4d;
     }
 
-    /* Animação de Brilho Flutuante */
+    /* Animação de Fundo Flutuante */
     @keyframes pulseGlow {
       0% { 
         background-position: 0% 50%;
@@ -80,70 +80,41 @@
       color: var(--primary-orange);
     }
 
-    /* Hero Section */
+    /* Hero Section Animado */
     .hero {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 140px 5% 80px;
-      background-color: #000000;
-    }
-
-    /* Bloco do Título com a Imagem de Fundo Totalmente Nítida */
-    .title-banner {
-      position: relative;
-      max-width: 950px;
-      width: 100%;
-      padding: 70px 40px;
-      border-radius: 20px;
-      overflow: hidden;
       text-align: center;
-      border: 2px solid var(--primary-orange);
-      box-shadow: 0 0 35px rgba(255, 102, 0, 0.3);
-      
-      /* Imagem aplicada diretamente no fundo, sem desfoque/blur */
-      background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.75)), url('1.jfif');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      padding: 180px 8% 80px;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 102, 0, 0.55) 0%, rgba(255, 102, 0, 0.2) 40%, transparent 75%);
+      background-size: 200% 200%;
+      animation: pulseGlow 6s ease-in-out infinite;
     }
 
-    .hero-text {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Título */
     .hero-text h1 {
-      font-size: 3.2rem;
+      font-size: 3.5rem;
       line-height: 1.2;
       margin-bottom: 20px;
-      
-      background: radial-gradient(circle at 50% 50%, #ffffff 0%, var(--primary-orange) 50%, #ffffff 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      
-      animation: fadeInDown 1s ease forwards, pulseGlow 6s ease-in-out infinite;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+      animation: fadeInDown 1s ease forwards;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
     }
 
     .hero-text h1 span {
-      color: inherit;
-      text-shadow: inherit;
+      color: var(--primary-orange);
+      text-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
     }
 
     .hero-text p {
-      color: #ffffff;
-      font-size: 1.25rem;
-      max-width: 750px;
+      color: #e0e0e0;
+      font-size: 1.2rem;
+      max-width: 700px;
       margin: 0 auto;
       animation: fadeInUp 1s ease 0.3s forwards;
       opacity: 0;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
-      font-weight: 500;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
     }
 
     /* Seção Como Funciona */
@@ -717,11 +688,9 @@
     </header>
 
     <section class="hero">
-      <div class="title-banner">
-        <div class="hero-text">
-          <h1>TRANSFORME SEU CORPO E SUA <span>MENTE</span></h1>
-          <p>A melhor estrutura de treinos, equipamentos de ponta e acompanhamento profissional para você atingir seus objetivos mais rápido.</p>
-        </div>
+      <div class="hero-text">
+        <h1>TRANSFORME SEU CORPO E SUA <span>MENTE</span></h1>
+        <p>A melhor estrutura de treinos, equipamentos de ponta e acompanhamento profissional para você atingir seus objetivos mais rápido.</p>
       </div>
     </section>
 
@@ -1102,54 +1071,52 @@
         ]
       },
       "Resistência & Cardiorrespiratório": {
-        details: "<strong>Foco:</strong> Exercícios funcionais, corrida, bicicleta e treinos de alta densidade metabólica.",
-        fullWorkout: "<strong>Treino A:</strong> Treino Funcional & Core<br><strong>Treino B:</strong> Corrida de Longa Distância / Bike<br><strong>Treino C:</strong> Circuito com Peso Corporal",
+        details: "<strong>Foco:</strong> Funcional, corrida, bike e alta densidade de repetições (15-20).",
+        fullWorkout: "<strong>Treino A:</strong> Corrida contínua + Core<br><strong>Treino B:</strong> Circuito de agilidade<br><strong>Treino C:</strong> Bike indoor + Resistência muscular",
         nutrition: [
-          { title: "Café da Manhã", desc: "Tapioca com queijo branco, suco verde e frutas" },
-          { title: "Almoço", desc: "Macarrão integral com atum e molho de tomate caseiro" },
-          { title: "Lanche / Pré-Treino", desc: "Açaí puro com granola e banana" },
-          { title: "Jantar", desc: "Omelete com vegetais e torrada integral" }
+          { title: "Café da Manhã", desc: "Pão integral, queijo cotagge e suco verde" },
+          { title: "Almoço", desc: "Macarrão integral com atum e salada de folhas" },
+          { title: "Lanche / Pré-Treino", desc: "Barra de cereais proteica e fruta" },
+          { title: "Jantar", desc: "Omelete com legumes e batata cozida" }
         ]
       },
       "Força & Powerlifting": {
-        details: "<strong>Foco:</strong> Baixas repetições (1 a 5) com carga máxima, intervalos longos de descanso e exercícios compostos.",
-        fullWorkout: "<strong>Treino A:</strong> Agachamento Livre & Variações<br><strong>Treino B:</strong> Supino Reto & Exercícios de Empurrar<br><strong>Treino C:</strong> Levantamento Terra & Acessórios",
+        details: "<strong>Foco:</strong> Baixas repetições (1-5 reps) com cargas máximas e descanso longo entre séries.",
+        fullWorkout: "<strong>Treino A:</strong> Agachamento livre + Acessórios<br><strong>Treino B:</strong> Supino reto + Tríceps heavy<br><strong>Treino C:</strong> Levantamento Terra + Dorsal",
         nutrition: [
-          { title: "Café da Manhã", desc: "Pão integral, ovos com queijo e vitamina de abacate" },
+          { title: "Café da Manhã", desc: "Pão integral com pasta de amendoim e café preto" },
           { title: "Almoço", desc: "Arroz, feijão, bife de patinho e salada" },
-          { title: "Lanche / Pré-Treino", desc: "Sanduíche natural de frango e suco de laranja" },
-          { title: "Jantar", desc: "Arroz, peixe assado ou frango com batatas" }
+          { title: "Lanche / Pré-Treino", desc: "Banana, aveia e pão com patinho moído" },
+          { title: "Jantar", desc: "Mandioca, filé de frango e ovos cozidos" }
         ]
       }
     };
 
-    function updateWorkoutAndNutrition(goal) {
-      const plan = dataPlans[goal] || dataPlans["Hipertrofia (Ganho de Massa)"];
+    function updateWorkoutAndNutrition(planKey) {
+      const plan = dataPlans[planKey];
+      if (!plan) return;
 
       document.getElementById('workoutDetails').innerHTML = plan.details;
       document.getElementById('fullWorkoutView').innerHTML = plan.fullWorkout;
 
-      const nutritionListEl = document.getElementById('nutritionList');
-      nutritionListEl.innerHTML = "";
-
+      const nutritionListElem = document.getElementById('nutritionList');
+      nutritionListElem.innerHTML = '';
+      
       plan.nutrition.forEach(meal => {
         const li = document.createElement('li');
-        li.innerHTML = `
-          <span class="meal-title">${meal.title}</span>
-          <span class="meal-desc">${meal.desc}</span>
-        `;
-        nutritionListEl.appendChild(li);
+        li.innerHTML = `<span class="meal-title">${meal.title}</span><span class="meal-desc">${meal.desc}</span>`;
+        nutritionListElem.appendChild(li);
       });
     }
 
-    function switchTab(tabName, navElement) {
+    function switchTab(tabId, navElement) {
       const tabs = document.querySelectorAll('.tab-page');
       tabs.forEach(tab => tab.classList.remove('active'));
 
       const navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(item => item.classList.remove('active'));
 
-      document.getElementById(`tab-${tabName}`).classList.add('active');
+      document.getElementById(`tab-${tabId}`).classList.add('active');
       navElement.classList.add('active');
     }
   </script>
