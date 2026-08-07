@@ -80,7 +80,7 @@
       color: var(--primary-orange);
     }
 
-    /* Hero Section Animado */
+    /* Hero Section com Imagem de Fundo */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -89,26 +89,23 @@
       align-items: center;
       text-align: center;
       padding: 180px 8% 80px;
-      background: radial-gradient(circle at 50% 50%, rgba(255, 102, 0, 0.55) 0%, rgba(255, 102, 0, 0.2) 40%, transparent 75%);
-      background-size: 200% 200%;
-      animation: pulseGlow 6s ease-in-out infinite;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('1.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
-    /* Título Animado com o mesmo efeito do Fundo */
+    /* Título Animado */
     .hero-text h1 {
       font-size: 3.5rem;
-      line-height: 1.2;
+      line-height: 0,5;
       margin-bottom: 20px;
-      
-      /* Aplica o gradiente flutuante no próprio texto */
       background: radial-gradient(circle at 50% 50%, #ffffff 0%, var(--primary-orange) 50%, #ffffff 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      
-      /* Animação Dupla: Entrada (fadeInDown) + Movimento do Fundo (pulseGlow) */
-      animation: fadeInDown 1s ease forwards, pulseGlow 6s ease-in-out infinite;
+      animation: fadeInDown 1s ease forwards;
       text-shadow: 0 0 20px rgba(255, 102, 0, 0.2);
     }
 
@@ -228,7 +225,6 @@
       margin-bottom: 24px;
     }
 
-    /* Botão com Pulso Contínuo */
     @keyframes pulseBtn {
       0% { box-shadow: 0 0 0 0 rgba(255, 102, 0, 0.6); }
       70% { box-shadow: 0 0 0 15px rgba(255, 102, 0, 0); }
@@ -254,7 +250,6 @@
       transform: scale(1.02);
     }
 
-    /* Animações de Entrada */
     .reveal {
       opacity: 0;
       transform: translateY(40px);
@@ -358,7 +353,6 @@
       border-color: var(--primary-orange);
     }
 
-    /* Keyframes Gerais */
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-30px); }
       to { opacity: 1; transform: translateY(0); }
@@ -369,9 +363,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ==========================================
-       ÁREA DO ALUNO & NAVEGAÇÃO DE PÁGINAS
-    ========================================== */
+    /* Área do Aluno */
     #main-screen {
       display: none;
       min-height: 100vh;
@@ -428,7 +420,6 @@
       color: var(--primary-orange);
     }
 
-    /* Bloco de Frequência */
     .freq-box {
       text-align: center;
       padding: 10px 0;
@@ -526,7 +517,6 @@
       margin-bottom: 15px;
     }
 
-    /* Bloco de Peso */
     .weight-display {
       font-size: 3rem;
       font-weight: 800;
@@ -579,7 +569,6 @@
       text-align: center;
     }
 
-    /* Exercício Select */
     .exercise-select-group label {
       display: block;
       color: var(--text-gray);
@@ -610,7 +599,6 @@
       line-height: 1.6;
     }
 
-    /* Plano Nutricional */
     .nutrition-container {
       max-width: 800px;
       margin: 0 auto;
@@ -645,7 +633,6 @@
       text-align: right;
     }
 
-    /* Menu de Navegação Inferior */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -699,7 +686,7 @@
 
     <section class="hero">
       <div class="hero-text">
-        <h1>TRANSFORME SEU CORPO E SUA <span>MENTE</span></h1>
+        <h1>TRANSFORMANDO SEU CORPO <h1/> <h1> E SUA SAUDE </h1>
         <p>A melhor estrutura de treinos, equipamentos de ponta e acompanhamento profissional para você atingir seus objetivos mais rápido.</p>
       </div>
     </section>
@@ -1081,54 +1068,52 @@
         ]
       },
       "Resistência & Cardiorrespiratório": {
-        details: "<strong>Foco:</strong> Funcional, corrida, bike e alta densidade de repetições (15-20).",
-        fullWorkout: "<strong>Treino A:</strong> Corrida contínua + Core<br><strong>Treino B:</strong> Circuito de agilidade<br><strong>Treino C:</strong> Bike indoor + Resistência muscular",
+        details: "<strong>Foco:</strong> Exercícios funcionais, corrida, bike e alta densidade de treino.",
+        fullWorkout: "<strong>Treino A:</strong> Corrida HIIT + Core<br><strong>Treino B:</strong> Circuito Funcional 45 min<br><strong>Treino C:</strong> Bike/Remo & Mobilidade",
         nutrition: [
-          { title: "Café da Manhã", desc: "Pão integral, queijo cotagge e suco verde" },
-          { title: "Almoço", desc: "Macarrão integral com atum e salada de folhas" },
-          { title: "Lanche / Pré-Treino", desc: "Barra de cereais proteica e fruta" },
-          { title: "Jantar", desc: "Omelete com legumes e batata cozida" }
+          { title: "Café da Manhã", desc: "Panqueca de aveia, banana e mel" },
+          { title: "Almoço", desc: "Arroz integral, feijão, frango grelhado e salada" },
+          { title: "Lanche / Pré-Treino", desc: "Torrada integral com pasta de amendoim" },
+          { title: "Jantar", desc: "Omelete com legumes e batata-doce" }
         ]
       },
       "Força & Powerlifting": {
-        details: "<strong>Foco:</strong> Baixas repetições (1-5 reps) com cargas máximas e descanso longo entre séries.",
-        fullWorkout: "<strong>Treino A:</strong> Agachamento livre + Acessórios<br><strong>Treino B:</strong> Supino reto + Tríceps heavy<br><strong>Treino C:</strong> Levantamento Terra + Dorsal",
+        details: "<strong>Foco:</strong> Cargas máximas, baixas repetições (1 a 5) e maior tempo de descanso.",
+        fullWorkout: "<strong>Treino A:</strong> Agachamento & Exercícios Auxiliares<br><strong>Treino B:</strong> Supino Reto & Tríceps<br><strong>Treino C:</strong> Levantamento Terra & Costas",
         nutrition: [
-          { title: "Café da Manhã", desc: "Pão integral com pasta de amendoim e café preto" },
-          { title: "Almoço", desc: "Arroz, feijão, bife de patinho e salada" },
-          { title: "Lanche / Pré-Treino", desc: "Banana, aveia e pão com patinho moído" },
-          { title: "Jantar", desc: "Mandioca, filé de frango e ovos cozidos" }
+          { title: "Café da Manhã", desc: "Ovos, pão integral e fruta" },
+          { title: "Almoço", desc: "Carne vermelha magra, arroz, feijão e legumes" },
+          { title: "Lanche / Pré-Treino", desc: "Vitamina de proteína com aveia e banana" },
+          { title: "Jantar", desc: "Frango grelhado, mandioca e salada" }
         ]
       }
     };
 
-    function updateWorkoutAndNutrition(planKey) {
-      const plan = dataPlans[planKey];
-      if (!plan) return;
-
+    function updateWorkoutAndNutrition(goal) {
+      const plan = dataPlans[goal] || dataPlans["Hipertrofia (Ganho de Massa)"];
       document.getElementById('workoutDetails').innerHTML = plan.details;
       document.getElementById('fullWorkoutView').innerHTML = plan.fullWorkout;
 
-      const nutritionListElem = document.getElementById('nutritionList');
-      nutritionListElem.innerHTML = '';
-      
-      plan.nutrition.forEach(meal => {
+      const list = document.getElementById('nutritionList');
+      list.innerHTML = "";
+      plan.nutrition.forEach(item => {
         const li = document.createElement('li');
-        li.innerHTML = `<span class="meal-title">${meal.title}</span><span class="meal-desc">${meal.desc}</span>`;
-        nutritionListElem.appendChild(li);
+        li.innerHTML = `<span class="meal-title">${item.title}</span><span class="meal-desc">${item.desc}</span>`;
+        list.appendChild(li);
       });
     }
 
-    function switchTab(tabId, navElement) {
-      const tabs = document.querySelectorAll('.tab-page');
-      tabs.forEach(tab => tab.classList.remove('active'));
-
-      const navItems = document.querySelectorAll('.nav-item');
-      navItems.forEach(item => item.classList.remove('active'));
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.tab-page').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
 
       document.getElementById(`tab-${tabId}`).classList.add('active');
-      navElement.classList.add('active');
+      el.classList.add('active');
     }
+
+    // Inicialização padrão
+    updateWorkoutAndNutrition("Hipertrofia (Ganho de Massa)");
+    calculateFrequency();
   </script>
 </body>
 </html>
